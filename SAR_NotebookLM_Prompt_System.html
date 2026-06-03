@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAR Intelligence — ชุด Prompt ตรวจ SAR โรงเรียนเอกชน</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #181c27;
+  --surface2: #1f2436;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #e8eaf2;
+  --muted: #8892aa;
+  --dim: #535d75;
+  --gold: #c9a84c;
+  --gold-dim: rgba(201,168,76,0.12);
+  --gold-border: rgba(201,168,76,0.3);
+  --blue: #4a90d9;
+  --blue-dim: rgba(74,144,217,0.1);
+  --teal: #3dbfaa;
+  --teal-dim: rgba(61,191,170,0.1);
+  --red: #e05c5c;
+  --red-dim: rgba(224,92,92,0.1);
+  --amber: #d97f3a;
+  --amber-dim: rgba(217,127,58,0.1);
+  --green: #5aad7a;
+  --green-dim: rgba(90,173,122,0.1);
+  --purple: #8b6fd4;
+  --purple-dim: rgba(139,111,212,0.1);
+  --radius: 10px;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'Sarabun', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #0f1117 0%, #151a28 100%);
+  border-bottom: 1px solid var(--gold-border);
+  padding: 2.5rem 2rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  padding: 3px 10px;
+  border-radius: 4px;
+  letter-spacing: .08em;
+  margin-bottom: 1rem;
+}
+.header h1 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: .4rem;
+}
+.header p {
+  color: var(--muted);
+  font-size: 14px;
+  max-width: 640px;
+}
+.header-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.2rem;
+  flex-wrap: wrap;
+}
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--dim);
+}
+.meta-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+/* LAYOUT */
+.container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+/* ZONE LEGEND */
+.zone-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 2.5rem;
+  padding: 1.2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.zone-item {
+  text-align: center;
+  padding: .6rem .4rem;
+  border-radius: 6px;
+}
+.zone-item.za { background: var(--blue-dim); border: 1px solid rgba(74,144,217,0.2); }
+.zone-item.zb { background: var(--teal-dim); border: 1px solid rgba(61,191,170,0.2); }
+.zone-item.zc { background: var(--amber-dim); border: 1px solid rgba(217,127,58,0.2); }
+.zone-item.zd { background: var(--red-dim); border: 1px solid rgba(224,92,92,0.2); }
+.zone-label { font-family: var(--mono); font-size: 11px; font-weight: 500; margin-bottom: 3px; }
+.zone-item.za .zone-label { color: var(--blue); }
+.zone-item.zb .zone-label { color: var(--teal); }
+.zone-item.zc .zone-label { color: var(--amber); }
+.zone-item.zd .zone-label { color: var(--red); }
+.zone-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+/* SECTION */
+.section { margin-bottom: 2.5rem; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+  padding-bottom: .6rem;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  border-radius: 4px;
+  padding: 2px 8px;
+  min-width: 32px;
+  text-align: center;
+}
+.section-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.section-sub { font-size: 12px; color: var(--muted); margin-left: auto; }
+
+/* PROMPT CARD */
+.prompt-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.prompt-card:hover { border-color: var(--border2); }
+.prompt-card.master { border-color: var(--gold-border); }
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: .9rem 1.1rem;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+.card-head:hover { background: rgba(255,255,255,0.03); }
+
+.card-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: .05em;
+  white-space: nowrap;
+}
+.badge-master { background: var(--gold-dim); color: var(--gold); border: 1px solid var(--gold-border); }
+.badge-p1 { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(74,144,217,0.2); }
+.badge-p2 { background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(61,191,170,0.2); }
+.badge-p3 { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(217,127,58,0.2); }
+.badge-p4 { background: var(--red-dim); color: var(--red); border: 1px solid rgba(224,92,92,0.2); }
+.badge-p5 { background: var(--green-dim); color: var(--green); border: 1px solid rgba(90,173,122,0.2); }
+.badge-p6 { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(139,111,212,0.2); }
+
+.card-title { font-size: 13.5px; font-weight: 600; color: var(--text); flex: 1; }
+.card-zone-tags { display: flex; gap: 4px; margin-left: auto; }
+.zone-tag {
+  font-size: 10px;
+  font-family: var(--mono);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.zt-a { background: var(--blue-dim); color: var(--blue); }
+.zt-b { background: var(--teal-dim); color: var(--teal); }
+.zt-c { background: var(--amber-dim); color: var(--amber); }
+.zt-d { background: var(--red-dim); color: var(--red); }
+.toggle-icon { font-size: 12px; color: var(--dim); transition: transform .2s; }
+.toggle-icon.open { transform: rotate(90deg); }
+
+.card-body { display: none; padding: 1.1rem; }
+.card-body.open { display: block; }
+
+/* PURPOSE */
+.purpose-box {
+  background: rgba(255,255,255,0.03);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: .6rem .9rem;
+  margin-bottom: 1rem;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* DNA TAGS */
+.dna-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 1rem;
+}
+.dna-tag {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.dna-tag.active { background: var(--gold-dim); color: var(--gold); border-color: var(--gold-border); }
+
+/* PROMPT BLOCK */
+.prompt-block {
+  background: #0a0d14;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: .8rem;
+}
+.prompt-block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .5rem .9rem;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+}
+.prompt-lang { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+.copy-btn {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.copy-btn:hover { color: var(--gold); border-color: var(--gold-border); }
+.copy-btn.copied { color: var(--green); border-color: var(--green); }
+
+pre {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: var(--text);
+  padding: 1rem 1.1rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+}
+.hl-bracket { color: var(--gold); }
+.hl-key { color: var(--blue); }
+.hl-warn { color: var(--red); }
+.hl-tip { color: var(--teal); }
+.hl-zone { color: var(--amber); }
+
+/* OUTPUT FORMAT */
+.output-section { margin-top: 1rem; }
+.output-title { font-size: 12px; color: var(--muted); margin-bottom: .5rem; font-weight: 500; }
+.output-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+.output-item {
+  font-size: 12px;
+  padding: .4rem .7rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.output-icon { font-size: 13px; }
+
+/* DNA PANEL */
+.dna-panel {
+  background: var(--surface);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.3rem;
+  margin-bottom: 2rem;
+}
+.dna-panel-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: .8rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dna-list { list-style: none; }
+.dna-list li {
+  padding: .4rem 0;
+  font-size: 13px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.dna-list li:last-child { border-bottom: none; }
+.dna-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  border-radius: 3px;
+  padding: 1px 5px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* WORKFLOW */
+.workflow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.wf-step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: .5rem .9rem;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  min-width: 90px;
+}
+.wf-step strong { display: block; font-size: 11px; color: var(--text); margin-bottom: 1px; font-family: var(--mono); }
+.wf-arrow { color: var(--dim); padding: 0 4px; font-size: 14px; }
+
+/* PRINT */
+@media print {
+  body { background: #fff; color: #111; font-size: 13px; }
+  .header { background: #f5f5f5; border-bottom: 2px solid #c9a84c; }
+  .header h1, .section-title, .card-title { color: #111; }
+  .prompt-block { border: 1px solid #ddd; }
+  pre { background: #f8f8f8; color: #111; border: none; }
+  .card-body { display: block !important; }
+  .toggle-icon { display: none; }
+  .copy-btn { display: none; }
+  .zone-bar, .dna-panel, .workflow { break-inside: avoid; }
+  .prompt-card { break-inside: avoid; border: 1px solid #ddd; margin-bottom: 1.5rem; }
+}
+
+@media (max-width: 640px) {
+  .zone-bar { grid-template-columns: repeat(2,1fr); }
+  .output-grid { grid-template-columns: 1fr; }
+  .workflow { gap: 4px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-tag">SAR Intelligence Hub — นครราชสีมา</div>
+  <h1>ชุด Prompt ตรวจ SAR โรงเรียนเอกชน<br>สำหรับ NotebookLM</h1>
+  <p>ออกแบบโดยสังเคราะห์ DNA การตรวจของผู้ทรงคุณวุฒิจริง 5 รูปแบบ
+     ครอบคลุมโรงเรียน 4 แห่ง: บุญเจริญวิทยา, ประชานุสรณ์, สกุลศึกษา, มกุฎคีรีวัน</p>
+  <div class="header-meta">
+    <span class="meta-item"><span class="meta-dot"></span>6 Prompt หลัก</span>
+    <span class="meta-item"><span class="meta-dot"></span>4 Zone แหล่งข้อมูล</span>
+    <span class="meta-item"><span class="meta-dot"></span>มาตรฐาน สมศ. รอบ 4 + สช.</span>
+    <span class="meta-item"><span class="meta-dot"></span>สำนักงานศึกษาธิการจังหวัดนครราชสีมา</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ZONE LEGEND -->
+  <div class="zone-bar">
+    <div class="zone-item za">
+      <div class="zone-label">ZONE A</div>
+      <div class="zone-desc">กฎระเบียบ + มาตรฐาน<br>สมศ. / สช. / สพฐ.</div>
+    </div>
+    <div class="zone-item zb">
+      <div class="zone-label">ZONE B</div>
+      <div class="zone-desc">SAR ตัวอย่างดี<br>3–5 ฉบับอ้างอิง</div>
+    </div>
+    <div class="zone-item zc">
+      <div class="zone-label">ZONE C</div>
+      <div class="zone-desc">SAR ที่ตรวจแล้ว<br>+ คำแนะนำผู้ทรงฯ</div>
+    </div>
+    <div class="zone-item zd">
+      <div class="zone-label">ZONE D</div>
+      <div class="zone-desc">SAR เป้าหมาย<br>ที่ต้องการตรวจ</div>
+    </div>
+  </div>
+
+  <!-- WORKFLOW -->
+  <div class="workflow">
+    <div class="wf-step"><strong>ZONE A+B+C</strong>อัปโหลดก่อน</div>
+    <span class="wf-arrow">→</span>
+    <div class="wf-step"><strong>ZONE D</strong>SAR เป้าหมาย</div>
+    <span class="wf-arrow">→</span>
+    <div class="wf-step"><strong>Prompt 0</strong>ตั้งบทบาท</div>
+    <span class="wf-arrow">→</span>
+    <div class="wf-step"><strong>Prompt 1–5</strong>ตรวจตามลำดับ</div>
+    <span class="wf-arrow">→</span>
+    <div class="wf-step"><strong>Gemini Gem</strong>สังเคราะห์รายงาน</div>
+  </div>
+
+  <!-- DNA PANEL -->
+  <div class="dna-panel">
+    <div class="dna-panel-title">⬡ DNA การตรวจของผู้ทรงคุณวุฒิ — 5 รูปแบบที่สังเคราะห์จากเอกสารจริง</div>
+    <ul class="dna-list">
+      <li>
+        <span class="dna-num">DNA 1</span>
+        <span><strong style="color:var(--text)">ตรวจความสอดคล้องภายใน (Internal Consistency)</strong> — จุดเด่นกับจุดด้อยต้องไม่ขัดแย้งกัน เช่น บอกว่า "พัฒนาการดีครบ 4 ด้าน" แต่จุดด้อยบอกว่า "ขาดกระบวนการทางคณิตศาสตร์" — ถือว่าขัดแย้งกัน</span>
+      </li>
+      <li>
+        <span class="dna-num">DNA 2</span>
+        <span><strong style="color:var(--text)">ตรวจหลักฐานเชิงประจักษ์แบบ Actionable</strong> — ต้องระบุเป็นข้อๆ ชัดเจน แยกรายมาตรฐาน รายระดับ พร้อมชื่อเอกสารจริง ไม่ใช่แค่กล่าวถึงรวมๆ ในตอนท้าย</span>
+      </li>
+      <li>
+        <span class="dna-num">DNA 3</span>
+        <span><strong style="color:var(--text)">ตรวจความเป็นวิชาการของภาษา</strong> — ภาษาในเนื้อหาต้องเป็นทางการ เช่น "ปูพื้นฐานการอ่านออกเขียนได้" ไม่เพียงพอ ต้องแก้เป็น "กำหนดแผนงาน/โครงการ/กิจกรรม เพื่อพัฒนาทักษะพื้นฐานด้านการอ่าน การเขียน และการคิดคำนวณ"</span>
+      </li>
+      <li>
+        <span class="dna-num">DNA 4</span>
+        <span><strong style="color:var(--text)">ตรวจความน่าเชื่อถือของตัวเลข</strong> — เป้าหมายเชิงปริมาณกับผลสำเร็จเท่ากันเกือบทุกโครงการ → ตั้งคำถามว่าประเมินจริงหรือเปล่า ต้องสมเหตุสมผลตามบริบทจริง</span>
+      </li>
+      <li>
+        <span class="dna-num">DNA 5</span>
+        <span><strong style="color:var(--text)">ตรวจความถูกต้องของหลักสูตร/วันที่/การสะกด</strong> — หลักสูตรปี 2565 นำมาใช้ปี 2568 = ไม่มีการพัฒนาหลักสูตร, วันที่ประกาศต้องถูกต้องตามปีการศึกษา, ตัวเลขไทยและอารบิกไม่ควรปะปนกัน</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- PROMPT 0 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">P0</span>
+      <span class="section-title">Master Setup Prompt — ตั้งบทบาทผู้เชี่ยวชาญ</span>
+      <span class="section-sub">ใช้ครั้งเดียวต่อ Session</span>
+    </div>
+
+    <div class="prompt-card master">
+      <div class="card-head" onclick="toggle(this)">
+        <span class="card-badge badge-master">MASTER</span>
+        <span class="card-title">ตั้ง NotebookLM เป็นผู้ทรงคุณวุฒิตรวจ SAR</span>
+        <div class="card-zone-tags">
+          <span class="zone-tag zt-a">A</span>
+          <span class="zone-tag zt-b">B</span>
+          <span class="zone-tag zt-c">C</span>
+          <span class="zone-tag zt-d">D</span>
+        </div>
+        <span class="toggle-icon">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="purpose-box">
+          วัตถุประสงค์: ตั้งกรอบความคิดและบทบาทให้ NotebookLM ก่อนเริ่มตรวจ
+          ทำให้การตอบสนองทุก Prompt ถัดไปมีความสม่ำเสมอและตรงมาตรฐานผู้ทรงฯ
+        </div>
+        <div class="dna-row">
+          <span class="dna-tag active">DNA 1–5 ทั้งหมด</span>
+          <span class="dna-tag">กำหนดบทบาท</span>
+          <span class="dna-tag">วางกรอบมาตรฐาน</span>
+          <span class="dna-tag">ใช้ครั้งเดียว</span>
+        </div>
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-lang">prompt · thai</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
+          </div>
+          <pre>คุณคือ <span class="hl-bracket">ผู้ทรงคุณวุฒิการประกันคุณภาพการศึกษา</span> ที่มีประสบการณ์ตรวจ SAR โรงเรียนเอกชนมาไม่ต่ำกว่า 15 ปี
+คุณมีความเชี่ยวชาญในมาตรฐานการประเมินคุณภาพของ <span class="hl-key">สมศ. รอบ 4</span> และ <span class="hl-key">สช.</span>
+
+<span class="hl-zone">===แหล่งข้อมูลที่คุณมีใน Notebook นี้===</span>
+Zone A: ระเบียบ มาตรฐาน และแนวทาง สมศ./สช.
+Zone B: SAR ตัวอย่างที่มีคุณภาพสูง (อ้างอิงเทียบ)
+Zone C: SAR ที่ผ่านการตรวจจากผู้ทรงคุณวุฒิ พร้อมคำแนะนำ (เรียนรู้สไตล์การตรวจ)
+Zone D: SAR ของโรงเรียน [<span class="hl-bracket">ชื่อโรงเรียน</span>] ที่ต้องการตรวจในวันนี้
+
+<span class="hl-zone">===หลักการตรวจของคุณ===</span>
+1. ตรวจ<span class="hl-warn">ความสอดคล้องภายใน</span> — จุดเด่นกับจุดด้อยต้องไม่ขัดแย้งกัน
+2. ตรวจ<span class="hl-warn">หลักฐานเชิงประจักษ์</span> — ต้องระบุเป็นข้อๆ ชัดเจนทุกมาตรฐาน ไม่รวบไว้ท้ายเล่ม
+3. ตรวจ<span class="hl-warn">ความเป็นวิชาการของภาษา</span> — ต้องเป็นทางการ ไม่ใช้ภาษาพูด
+4. ตรวจ<span class="hl-warn">ความน่าเชื่อถือของตัวเลข</span> — เป้าหมายกับผลสำเร็จเท่ากันทุกโครงการ = น่าสงสัย
+5. ตรวจ<span class="hl-warn">ความถูกต้องทางเทคนิค</span> — หลักสูตร วันที่ ปีการศึกษา ตัวเลข และการสะกดคำ
+
+<span class="hl-zone">===รูปแบบการให้ข้อเสนอแนะ===</span>
+- ตรงไปตรงมา ไม่ปรานี แต่สร้างสรรค์
+- ระบุ<span class="hl-tip">ตำแหน่ง/หน้า/มาตรฐาน</span>ที่พบปัญหาให้ชัดเจน
+- เสนอ<span class="hl-tip">ตัวอย่างการแก้ไข</span>ที่เป็นรูปธรรมทุกครั้ง
+- เปรียบเทียบกับ Zone B (SAR ตัวอย่างดี) เมื่อเหมาะสม
+
+ตอบรับว่าเข้าใจบทบาทและพร้อมเริ่มตรวจ SAR ของโรงเรียน [<span class="hl-bracket">ชื่อโรงเรียน</span>]</pre>
+        </div>
+        <div class="output-section">
+          <div class="output-title">ผลลัพธ์ที่คาดหวัง</div>
+          <div class="output-grid">
+            <div class="output-item"><span class="output-icon">✓</span>NotebookLM ยืนยันบทบาท + สรุปเอกสารที่มีใน Notebook</div>
+            <div class="output-item"><span class="output-icon">✓</span>พร้อมรับ Prompt P1–P5 ถัดไปทันที</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROMPT 1 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">P1</span>
+      <span class="section-title">ตรวจโครงสร้างและความครบถ้วนของ SAR</span>
+      <span class="section-sub">DNA 2, 5</span>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-head" onclick="toggle(this)">
+        <span class="card-badge badge-p1">STEP 1</span>
+        <span class="card-title">ตรวจโครงสร้าง บทสรุปผู้บริหาร และภาคผนวก</span>
+        <div class="card-zone-tags">
+          <span class="zone-tag zt-a">A</span>
+          <span class="zone-tag zt-b">B</span>
+          <span class="zone-tag zt-d">D</span>
+        </div>
+        <span class="toggle-icon">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="purpose-box">
+          ตรวจความครบถ้วนของโครงสร้าง SAR เทียบกับมาตรฐาน สมศ./สช. และ SAR ตัวอย่างดีใน Zone B
+        </div>
+        <div class="dna-row">
+          <span class="dna-tag active">DNA 2: หลักฐานเป็นข้อๆ</span>
+          <span class="dna-tag active">DNA 5: วันที่/หลักสูตร</span>
+          <span class="dna-tag">Zone A + B + D</span>
+        </div>
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-lang">prompt · thai</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
+          </div>
+          <pre>ตรวจโครงสร้างของ SAR โรงเรียน [<span class="hl-bracket">ชื่อโรงเรียน</span>] ใน Zone D โดยเทียบกับมาตรฐาน Zone A และ SAR ตัวอย่างดีใน Zone B
+
+ตรวจและรายงานในประเด็นต่อไปนี้:
+
+<span class="hl-key">1. ความครบถ้วนของส่วนประกอบ SAR</span>
+   - บทสรุปผู้บริหาร: ครบทั้ง 2 ระดับ (ปฐมวัย + ขั้นพื้นฐาน) หรือไม่
+   - จัดเรียงตามรายมาตรฐานหรือเขียนรวมกันเป็นความเรียง
+   - ส่วนที่ 1–4 ครบตามที่ สมศ./สช. กำหนดหรือไม่
+
+<span class="hl-key">2. บทสรุปผู้บริหาร</span>
+   - เขียนสรุปครบทุกมาตรฐานเป็นรายข้อหรือไม่
+   - มีการระบุระดับคุณภาพ (ดีเลิศ/ดีมาก/ดี/พัฒนา) อย่างชัดเจนหรือไม่
+   - มีแผนพัฒนาตนเองระบุเป็นข้อๆ ทั้ง 2 ระดับหรือไม่
+
+<span class="hl-key">3. หลักฐานสนับสนุนการประเมิน</span>
+   ตรวจว่า Zone D ระบุหลักฐานเชิงประจักษ์แยกรายมาตรฐาน รายระดับเป็นข้อๆ หรือไม่
+   เช่น ระดับปฐมวัย มาตรฐานที่ 1 ควรมี:
+   - รายงานผลการประเมินพัฒนาการ...
+   - บันทึกการตรวจสุขภาพ...
+   - รายงานโครงการ...
+   หากไม่มีหรือรวบไว้ท้ายเล่ม ให้ระบุว่า "ไม่ผ่าน DNA 2" พร้อมแนะนำการแก้ไข
+
+<span class="hl-key">4. ความถูกต้องทางเทคนิค</span>
+   - ปีหลักสูตรที่ใช้ตรงกับปีการศึกษาที่รายงานหรือไม่ (เช่น หลักสูตร 2565 ใช้ปี 2568 = <span class="hl-warn">ผิด</span>)
+   - วันที่ในประกาศมาตรฐาน วันที่รายงาน สอดคล้องกับปีการศึกษาหรือไม่
+   - ตัวเลขไทย/อารบิกปะปนกันหรือไม่
+   - พบคำสะกดผิดในส่วนใด
+
+<span class="hl-key">5. เปรียบเทียบกับ Zone B</span>
+   โครงสร้างใน Zone D ต่างจาก SAR ตัวอย่างดีใน Zone B อย่างไร
+   ระบุ 3 จุดที่ควรยกระดับให้ชัดเจนที่สุด
+
+สรุปผลเป็นตาราง: ผ่าน / ไม่ผ่าน / ควรปรับปรุง พร้อมหมายเหตุ</pre>
+        </div>
+        <div class="output-section">
+          <div class="output-title">ผลลัพธ์ที่คาดหวัง</div>
+          <div class="output-grid">
+            <div class="output-item"><span class="output-icon">📋</span>ตาราง pass/fail ตามส่วนประกอบ SAR</div>
+            <div class="output-item"><span class="output-icon">📝</span>รายการหลักฐานที่ขาดหายแยกรายมาตรฐาน</div>
+            <div class="output-item"><span class="output-icon">⚠️</span>ข้อผิดพลาดด้านหลักสูตร/วันที่/ตัวเลข</div>
+            <div class="output-item"><span class="output-icon">🔍</span>เปรียบเทียบกับ SAR Zone B</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROMPT 2 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">P2</span>
+      <span class="section-title">ตรวจความสอดคล้องภายใน (Internal Consistency)</span>
+      <span class="section-sub">DNA 1</span>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-head" onclick="toggle(this)">
+        <span class="card-badge badge-p2">STEP 2</span>
+        <span class="card-title">จุดเด่น–จุดด้อย–หลักฐาน–เป้าหมาย สอดคล้องกันหรือไม่</span>
+        <div class="card-zone-tags">
+          <span class="zone-tag zt-c">C</span>
+          <span class="zone-tag zt-d">D</span>
+        </div>
+        <span class="toggle-icon">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="purpose-box">
+          นี่คือจุดที่ผู้ทรงฯ ตรวจพบมากที่สุด — ความขัดแย้งระหว่างส่วนต่างๆ ของ SAR
+          ใช้ DNA 1 และเทียบกับรูปแบบที่พบใน Zone C
+        </div>
+        <div class="dna-row">
+          <span class="dna-tag active">DNA 1: Internal Consistency</span>
+          <span class="dna-tag active">DNA 4: ตัวเลขสมเหตุสมผล</span>
+          <span class="dna-tag">Zone C + D</span>
+        </div>
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-lang">prompt · thai</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
+          </div>
+          <pre>ตรวจ<span class="hl-warn">ความสอดคล้องภายใน</span>ของ SAR โรงเรียน [<span class="hl-bracket">ชื่อโรงเรียน</span>] ทุกมาตรฐาน โดยใช้รูปแบบข้อผิดพลาดที่พบใน Zone C เป็นแนวทาง
+
+ตรวจ 4 คู่ความสอดคล้องต่อไปนี้ในทุกมาตรฐาน:
+
+<span class="hl-key">คู่ที่ 1 — จุดเด่น ↔ จุดด้อย</span>
+สิ่งที่บอกว่าดีในจุดเด่น ต้องไม่ปรากฏเป็นปัญหาในจุดด้อย
+ตัวอย่างข้อผิดพลาดจาก Zone C:
+   "จุดเด่น: มีพัฒนาการดีครบ 4 ด้าน" แต่ "จุดด้อย: ขาดกระบวนการทางคณิตศาสตร์" = <span class="hl-warn">ขัดแย้ง</span>
+
+<span class="hl-key">คู่ที่ 2 — จุดด้อย ↔ แผนพัฒนา</span>
+ทุกจุดด้อยต้องมีแผนพัฒนาที่ตรงกัน ไม่ใช่แผนแบบเดิมทุกปี
+แผนพัฒนาต้องระบุเป็นข้อๆ ไม่เขียนเป็นความเรียงกว้างๆ
+
+<span class="hl-key">คู่ที่ 3 — เป้าหมายเชิงปริมาณ ↔ ผลสำเร็จเชิงปริมาณ</span>
+ตรวจทุกโครงการใน Zone D ว่า:
+   - เป้าหมายกับผลสำเร็จเท่ากันกี่โครงการ
+   - ถ้าเท่ากันเกิน 70% ของโครงการ = <span class="hl-warn">ไม่น่าเชื่อถือ</span>
+   - ผลสำเร็จควรต่างจากเป้าหมาย ±5–15% จึงจะสมจริง
+
+<span class="hl-key">คู่ที่ 4 — เป้าหมายเชิงคุณภาพ ↔ ผลสำเร็จเชิงคุณภาพ</span>
+ต้องระบุระดับคุณภาพทั้งเป้าหมายและผล เช่น
+   "เป้าหมาย: ร้อยละ 85 ระดับดีมาก → ผล: ร้อยละ 87.5 ระดับดีมาก"
+   ไม่ใช่แค่ตัวเลขร้อยละอย่างเดียว
+
+เปรียบเทียบกับ Zone C: โรงเรียนใน Zone C ถูกผู้ทรงฯ ตำหนิเรื่องใดบ้าง
+และ Zone D มีรูปแบบเดียวกันหรือไม่
+
+สรุปเป็นรายมาตรฐาน ระบุ: สอดคล้อง / <span class="hl-warn">ขัดแย้ง</span> / ควรตรวจสอบ</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROMPT 3 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">P3</span>
+      <span class="section-title">ตรวจภาษาและความเป็นวิชาการ</span>
+      <span class="section-sub">DNA 3</span>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-head" onclick="toggle(this)">
+        <span class="card-badge badge-p3">STEP 3</span>
+        <span class="card-title">ปรับภาษาพูด → ภาษาวิชาการ พร้อมตัวอย่างแก้ไข</span>
+        <div class="card-zone-tags">
+          <span class="zone-tag zt-c">C</span>
+          <span class="zone-tag zt-d">D</span>
+        </div>
+        <span class="toggle-icon">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="purpose-box">
+          ผู้ทรงฯ ให้ความสำคัญกับภาษาวิชาการมากเป็นพิเศษ — ภาษาที่ครูใช้สะท้อนความรู้ความสามารถ
+        </div>
+        <div class="dna-row">
+          <span class="dna-tag active">DNA 3: ภาษาวิชาการ</span>
+          <span class="dna-tag">Zone C + D</span>
+        </div>
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-lang">prompt · thai</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
+          </div>
+          <pre>ตรวจ<span class="hl-warn">ภาษาและสำนวน</span>ใน SAR Zone D โดยเฉพาะในส่วนที่ 4 ผลการประเมินคุณภาพ และแผนพัฒนา
+
+<span class="hl-key">1. ค้นหาภาษาที่ไม่เป็นวิชาการ</span>
+ระบุทุกประโยคหรือวลีที่:
+   - เป็นภาษาพูด / ภาษาปาก
+   - คลุมเครือ ไม่ชัดเจน วัดผลไม่ได้
+   - ใช้คำทั่วไปแทนคำวิชาการที่ถูกต้อง
+
+ตัวอย่างจาก Zone C ที่ผู้ทรงฯ ตำหนิ:
+   ❌ "ปูพื้นฐานการอ่านออกเขียนได้"
+   ✅ "กำหนดแผนงาน/โครงการ/กิจกรรม เพื่อพัฒนาทักษะพื้นฐานด้านการอ่าน การเขียน และการคิดคำนวณในทุกระดับชั้น"
+
+<span class="hl-key">2. ตรวจภาษาในแผนพัฒนา</span>
+แผนพัฒนาต้องเขียนเป็นข้อๆ เช่น
+   "1. กำหนดปฏิทินการติดตามโครงการ...
+    2. มอบหมายผู้รับผิดชอบ...
+    3. ออกแบบเครื่องมือประเมิน..."
+ไม่ใช่ความเรียงยาวที่ไม่สามารถ action ได้
+
+<span class="hl-key">3. ตรวจการสะกดคำ</span>
+ค้นหาคำที่สะกดผิดทั้งหมดใน Zone D โดยเฉพาะ:
+   - คำศัพท์วิชาการด้านการศึกษา
+   - ชื่อมาตรฐาน/ตัวบ่งชี้
+   - ชื่อโครงการ/กิจกรรม
+
+<span class="hl-key">4. สร้างรายการ "ก่อน → หลัง"</span>
+สำหรับทุกประโยคที่พบปัญหา ให้เสนอเวอร์ชันที่แก้ไขแล้ว
+ในรูปแบบ:
+   ❌ ก่อน: [ประโยคเดิม]
+   ✅ หลัง: [ประโยคที่ปรับแล้ว]
+   📌 เหตุผล: [อธิบายสั้นๆ]</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROMPT 4 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">P4</span>
+      <span class="section-title">ตรวจหลักฐานเชิงประจักษ์รายมาตรฐาน</span>
+      <span class="section-sub">DNA 2</span>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-head" onclick="toggle(this)">
+        <span class="card-badge badge-p4">STEP 4</span>
+        <span class="card-title">สร้าง Evidence Matrix แยกรายมาตรฐาน รายระดับ</span>
+        <div class="card-zone-tags">
+          <span class="zone-tag zt-a">A</span>
+          <span class="zone-tag zt-b">B</span>
+          <span class="zone-tag zt-c">C</span>
+          <span class="zone-tag zt-d">D</span>
+        </div>
+        <span class="toggle-icon">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="purpose-box">
+          หัวใจของการตรวจ — หลักฐานที่ขาดหรือไม่ชัดเจนคือปัญหาหลักของทุกโรงเรียนใน Zone C
+        </div>
+        <div class="dna-row">
+          <span class="dna-tag active">DNA 2: หลักฐาน Actionable</span>
+          <span class="dna-tag">Zone A + B + C + D</span>
+        </div>
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-lang">prompt · thai</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
+          </div>
+          <pre>สร้าง <span class="hl-tip">Evidence Matrix</span> สำหรับ SAR Zone D โดยเทียบกับ Zone A (มาตรฐาน) และ Zone C (รูปแบบที่ผู้ทรงฯ ต้องการ)
+
+<span class="hl-key">สำหรับทุกมาตรฐาน ทุกระดับ ให้ระบุ:</span>
+
+มาตรฐานที่ [X] — ระดับ [ปฐมวัย/ขั้นพื้นฐาน]
+├── หลักฐานที่มีใน Zone D: [รายการเป็นข้อๆ]
+├── หลักฐานที่ Zone C + Zone A กำหนดว่าต้องมี: [รายการ]
+├── หลักฐานที่ขาดหาย: [รายการ + ระดับความสำคัญ]
+└── คำแนะนำเพิ่มเติม: [แนะนำชื่อเอกสาร/รายงานที่ควรจัดทำ]
+
+<span class="hl-key">ตรวจพิเศษ — หลักฐานที่อยู่ผิดที่</span>
+บางโรงเรียนใน Zone C นำหลักฐานไปรวบไว้ในภาคผนวกทั้งหมด
+แต่ สมศ./สช. กำหนดให้ระบุหลักฐานในส่วนที่ 4 แยกรายมาตรฐาน
+Zone D ทำแบบใด?
+
+<span class="hl-key">สรุปภาพรวม Evidence Gap</span>
+มาตรฐานใดที่มีหลักฐานสมบูรณ์ที่สุด / บกพร่องมากที่สุด
+ระบุ Top 5 หลักฐานที่ต้องเพิ่มเร่งด่วนก่อนส่ง สมศ.</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROMPT 5 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">P5</span>
+      <span class="section-title">สรุปผลการตรวจและรายงานผู้บริหาร</span>
+      <span class="section-sub">DNA 1–5 ทั้งหมด</span>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-head" onclick="toggle(this)">
+        <span class="card-badge badge-p5">STEP 5</span>
+        <span class="card-title">สร้างรายงานผลการตรวจสำหรับส่งโรงเรียน</span>
+        <div class="card-zone-tags">
+          <span class="zone-tag zt-a">A</span>
+          <span class="zone-tag zt-b">B</span>
+          <span class="zone-tag zt-c">C</span>
+          <span class="zone-tag zt-d">D</span>
+        </div>
+        <span class="toggle-icon">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="purpose-box">
+          รวบรวมผลจาก P1–P4 สังเคราะห์เป็นรายงานที่โรงเรียนสามารถนำไปแก้ไขได้จริง
+        </div>
+        <div class="dna-row">
+          <span class="dna-tag active">DNA 1–5 ทั้งหมด</span>
+          <span class="dna-tag">สรุปภาพรวม</span>
+          <span class="dna-tag">Action Items</span>
+          <span class="dna-tag">ส่งโรงเรียน</span>
+        </div>
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-lang">prompt · thai</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
+          </div>
+          <pre>สังเคราะห์ผลการตรวจทั้งหมดจาก Prompt ก่อนหน้า และสร้าง <span class="hl-tip">รายงานผลการตรวจ SAR</span> สำหรับโรงเรียน [<span class="hl-bracket">ชื่อโรงเรียน</span>]
+
+<span class="hl-zone">===รูปแบบรายงาน===</span>
+
+<span class="hl-key">ส่วนที่ 1: สรุปภาพรวมคุณภาพ SAR</span>
+ระบุระดับคุณภาพโดยรวมของ SAR ฉบับนี้:
+   □ ดีเลิศ — สามารถใช้เป็นตัวอย่างอ้างอิงได้
+   □ ดีมาก — มีจุดที่ต้องปรับปรุงเล็กน้อย
+   □ ดี — ต้องปรับปรุงหลายส่วนก่อนส่ง สมศ.
+   □ ต้องพัฒนา — ต้องแก้ไขอย่างจริงจังก่อนส่ง
+
+<span class="hl-key">ส่วนที่ 2: จุดเด่นของ SAR ฉบับนี้</span>
+ระบุ 3–5 สิ่งที่โรงเรียนทำได้ดี (เปรียบเทียบกับ Zone B และ Zone C)
+
+<span class="hl-key">ส่วนที่ 3: ประเด็นที่ต้องแก้ไขก่อนส่ง สมศ.</span>
+แบ่งเป็น 3 ระดับความเร่งด่วน:
+   🔴 <span class="hl-warn">ด่วนมาก</span> (ต้องแก้ไขทันที — ส่งผลต่อผลการประเมิน):
+      [รายการ + วิธีแก้]
+   🟡 ปานกลาง (ควรแก้ไขก่อนส่ง):
+      [รายการ + วิธีแก้]
+   🟢 ปรับปรุงได้ (ควรทำเพื่อยกระดับ):
+      [รายการ + วิธีแก้]
+
+<span class="hl-key">ส่วนที่ 4: Action Plan — แก้ไขภายใน [X] วัน</span>
+สร้าง checklist ที่โรงเรียนสามารถ tick ได้เลย:
+   □ บทสรุปผู้บริหาร: เพิ่ม...
+   □ มาตรฐานที่ 1 ปฐมวัย: เพิ่มหลักฐาน...
+   □ มาตรฐานที่ 2: แก้ไขภาษา...
+   □ ภาคผนวก: จัดระเบียบ...
+
+<span class="hl-key">ส่วนที่ 5: ประโยคตัวอย่างที่ปรับแก้แล้ว</span>
+เสนอ 5 ตัวอย่างภาษาที่แก้ไขแล้วเพื่อเป็นแนวทาง
+
+ใช้ภาษาสุภาพ สร้างสรรค์ แต่ตรงไปตรงมา
+รูปแบบเหมาะสำหรับส่งให้ผู้บริหารโรงเรียนอ่านได้โดยตรง</pre>
+        </div>
+        <div class="output-section">
+          <div class="output-title">ผลลัพธ์ที่คาดหวัง</div>
+          <div class="output-grid">
+            <div class="output-item"><span class="output-icon">📊</span>รายงานสมบูรณ์พร้อมส่งโรงเรียน</div>
+            <div class="output-item"><span class="output-icon">☑️</span>Checklist แก้ไขที่ทำได้ทันที</div>
+            <div class="output-item"><span class="output-icon">🟡</span>จัดลำดับความเร่งด่วน 3 ระดับ</div>
+            <div class="output-item"><span class="output-icon">✏️</span>ตัวอย่างภาษาที่ปรับแก้แล้ว</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROMPT 6 (BONUS) -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">P6</span>
+      <span class="section-title">Bonus — Prompt ส่งต่อ Gemini Gem (Ping-Pong)</span>
+      <span class="section-sub">สำหรับ Workflow ขั้นสูง</span>
+    </div>
+
+    <div class="prompt-card">
+      <div class="card-head" onclick="toggle(this)">
+        <span class="card-badge badge-p6">PING-PONG</span>
+        <span class="card-title">Export Output จาก NotebookLM → ส่งให้ Gemini Gem วิเคราะห์ต่อ</span>
+        <div class="card-zone-tags">
+          <span class="zone-tag zt-d">D</span>
+        </div>
+        <span class="toggle-icon">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="purpose-box">
+          คัดลอก Output จาก P5 แล้วใช้ Prompt นี้ใน Gemini Gem เพื่อสังเคราะห์ระดับจังหวัดหรือเปรียบเทียบข้ามโรงเรียน
+        </div>
+        <div class="dna-row">
+          <span class="dna-tag">Gemini Gem</span>
+          <span class="dna-tag">เปรียบเทียบข้ามโรงเรียน</span>
+          <span class="dna-tag">สังเคราะห์ระดับจังหวัด</span>
+        </div>
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-lang">gemini gem prompt · thai</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
+          </div>
+          <pre>ด้านล่างคือผลการตรวจ SAR ของโรงเรียน [<span class="hl-bracket">ชื่อโรงเรียน</span>] ที่ได้จาก NotebookLM
+
+[<span class="hl-bracket">วาง Output จาก P5 ที่นี่</span>]
+
+จากผลการตรวจนี้ กรุณา:
+
+<span class="hl-key">1. วิเคราะห์ Pattern</span>
+ปัญหาใดที่โรงเรียนนี้มีร่วมกับโรงเรียนอื่นๆ ที่ผ่านมา
+(หากมีผลตรวจโรงเรียนอื่นในบริบท ให้เปรียบเทียบด้วย)
+
+<span class="hl-key">2. จัดลำดับ Priority</span>
+จากทุกประเด็นที่พบ อะไรคือ Top 3 ที่ต้องแก้ไขก่อน
+เพื่อให้ผ่าน สมศ. รอบ 4 ได้แน่นอน
+
+<span class="hl-key">3. เสนอ Training Needs</span>
+โรงเรียนนี้ต้องการการพัฒนาครูด้านใดบ้าง
+เพื่อให้เขียน SAR ได้มาตรฐานในปีถัดไป
+
+<span class="hl-key">4. สรุปสำหรับรายงานจังหวัด</span>
+เขียนสรุปภาพรวม 1 ย่อหน้า (ไม่เกิน 5 ประโยค)
+เหมาะสำหรับรายงานสำนักงานศึกษาธิการจังหวัดนครราชสีมา</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggle(head) {
+  const body = head.nextElementSibling;
+  const icon = head.querySelector('.toggle-icon');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  icon.classList.toggle('open', !isOpen);
+}
+
+function copyPrompt(btn) {
+  const pre = btn.closest('.prompt-block').querySelector('pre');
+  const text = pre.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'คัดลอกแล้ว ✓';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'คัดลอก';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// Auto-open master prompt on load
+document.addEventListener('DOMContentLoaded', () => {
+  const firstHead = document.querySelector('.prompt-card.master .card-head');
+  if (firstHead) toggle(firstHead);
+});
+</script>
+</body>
+</html>
