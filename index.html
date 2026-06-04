@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAR Intelligence Hub v2 — นครราชสีมา 2568</title>
+<title>SAR Intelligence Hub v3 — นครราชสีมา 2568</title>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -94,8 +94,9 @@ body {
   color: var(--dim);
 }
 .meta-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+.meta-dot.blue { background: var(--blue); }
+.meta-dot.teal { background: var(--teal); }
 
-/* VERSION BADGE */
 .version-badge {
   display: inline-block;
   font-family: var(--mono);
@@ -109,10 +110,59 @@ body {
   vertical-align: middle;
 }
 
+/* ===== TAB SYSTEM ===== */
+.tab-bar {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border2);
+  background: #0d1120;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: .9rem 1.6rem;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--dim);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all .2s;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: var(--muted); background: rgba(255,255,255,0.02); }
+.tab-btn.active { color: var(--text); border-bottom-color: var(--gold); }
+.tab-btn.active.layer2 { border-bottom-color: var(--blue); }
+.tab-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+.tab-dot.blue { background: var(--blue); }
+.tab-label { }
+.tab-sub {
+  font-size: 10px;
+  color: var(--dim);
+  padding: 1px 6px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
 /* LAYOUT */
 .container { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
 
-/* ZONE LEGEND — 3 zones only */
+/* ZONE LEGEND */
 .zone-bar {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -123,11 +173,7 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
-.zone-item {
-  text-align: center;
-  padding: .7rem .5rem;
-  border-radius: 6px;
-}
+.zone-item { text-align: center; padding: .7rem .5rem; border-radius: 6px; }
 .zone-item.za { background: var(--blue-dim); border: 1px solid rgba(74,143,217,0.2); }
 .zone-item.zc { background: var(--amber-dim); border: 1px solid rgba(217,135,58,0.2); }
 .zone-item.zd { background: var(--red-dim); border: 1px solid rgba(217,92,92,0.2); }
@@ -169,6 +215,11 @@ body {
   min-width: 32px;
   text-align: center;
 }
+.section-num.blue {
+  color: var(--blue);
+  background: var(--blue-dim);
+  border-color: rgba(74,143,217,0.3);
+}
 .section-title { font-size: 14px; font-weight: 600; color: var(--text); }
 .section-sub { font-size: 12px; color: var(--muted); margin-left: auto; }
 
@@ -183,6 +234,8 @@ body {
 }
 .prompt-card:hover { border-color: var(--border2); }
 .prompt-card.master { border-color: var(--gold-border); }
+.prompt-card.layer2-card { border-color: rgba(74,143,217,0.25); }
+.prompt-card.layer2-card:hover { border-color: rgba(74,143,217,0.45); }
 
 .card-head {
   display: flex;
@@ -205,20 +258,22 @@ body {
   letter-spacing: .05em;
   white-space: nowrap;
 }
-.badge-master { background: var(--gold-dim); color: var(--gold); border: 1px solid var(--gold-border); }
-.badge-p1 { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(74,143,217,0.25); }
-.badge-p2 { background: var(--teal-dim); color: var(--teal); border: 1px solid rgba(61,191,170,0.25); }
-.badge-p3 { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(217,135,58,0.25); }
-.badge-p4 { background: var(--red-dim); color: var(--red); border: 1px solid rgba(217,92,92,0.25); }
-.badge-p5 { background: var(--green-dim); color: var(--green); border: 1px solid rgba(90,173,122,0.25); }
-.badge-p6 { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(139,111,212,0.25); }
+.badge-master  { background: var(--gold-dim);   color: var(--gold);   border: 1px solid var(--gold-border); }
+.badge-p1      { background: var(--blue-dim);   color: var(--blue);   border: 1px solid rgba(74,143,217,0.25); }
+.badge-p2      { background: var(--teal-dim);   color: var(--teal);   border: 1px solid rgba(61,191,170,0.25); }
+.badge-p3      { background: var(--amber-dim);  color: var(--amber);  border: 1px solid rgba(217,135,58,0.25); }
+.badge-p4      { background: var(--red-dim);    color: var(--red);    border: 1px solid rgba(217,92,92,0.25); }
+.badge-p5      { background: var(--green-dim);  color: var(--green);  border: 1px solid rgba(90,173,122,0.25); }
+.badge-sys     { background: rgba(74,143,217,0.15); color: #6aaee8; border: 1px solid rgba(74,143,217,0.35); }
+.badge-gap     { background: rgba(61,191,170,0.12); color: var(--teal); border: 1px solid rgba(61,191,170,0.3); }
+.badge-usage   { background: rgba(139,111,212,0.12); color: var(--purple); border: 1px solid rgba(139,111,212,0.3); }
 
 .card-title { font-size: 13.5px; font-weight: 600; color: var(--text); flex: 1; }
 .card-zone-tags { display: flex; gap: 4px; }
 .zone-tag { font-size: 10px; font-family: var(--mono); padding: 2px 6px; border-radius: 3px; }
-.zt-a { background: var(--blue-dim); color: var(--blue); }
+.zt-a { background: var(--blue-dim);  color: var(--blue); }
 .zt-c { background: var(--amber-dim); color: var(--amber); }
-.zt-d { background: var(--red-dim); color: var(--red); }
+.zt-d { background: var(--red-dim);   color: var(--red); }
 .toggle-icon { font-size: 11px; color: var(--dim); transition: transform .2s; flex-shrink: 0; }
 .toggle-icon.open { transform: rotate(90deg); }
 
@@ -236,18 +291,16 @@ body {
   color: var(--muted);
   line-height: 1.6;
 }
+.purpose-box.blue { border-left-color: var(--blue); }
 
 /* DNA TAGS */
 .dna-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
 .dna-tag {
-  font-size: 11px;
-  padding: 3px 8px;
-  border-radius: 4px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  color: var(--muted);
+  font-size: 11px; padding: 3px 8px; border-radius: 4px;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--muted);
 }
 .dna-tag.active { background: var(--gold-dim); color: var(--gold); border-color: var(--gold-border); }
+.dna-tag.blue   { background: var(--blue-dim); color: var(--blue); border-color: rgba(74,143,217,0.3); }
 
 /* PROMPT BLOCK */
 .prompt-block {
@@ -267,17 +320,11 @@ body {
 }
 .prompt-lang { font-family: var(--mono); font-size: 10px; color: var(--dim); }
 .copy-btn {
-  font-size: 11px;
-  font-family: var(--mono);
-  color: var(--muted);
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 2px 8px;
-  cursor: pointer;
-  transition: all .15s;
+  font-size: 11px; font-family: var(--mono); color: var(--muted);
+  background: none; border: 1px solid var(--border); border-radius: 4px;
+  padding: 2px 8px; cursor: pointer; transition: all .15s;
 }
-.copy-btn:hover { color: var(--gold); border-color: var(--gold-border); }
+.copy-btn:hover  { color: var(--gold);  border-color: var(--gold-border); }
 .copy-btn.copied { color: var(--green); border-color: rgba(90,173,122,0.5); }
 
 pre {
@@ -290,28 +337,23 @@ pre {
   word-break: break-word;
 }
 .hl-bracket { color: var(--gold); }
-.hl-key { color: var(--blue); }
-.hl-warn { color: var(--red); font-weight: 500; }
-.hl-tip { color: var(--teal); }
-.hl-zone { color: var(--amber); }
-.hl-comment { color: var(--dim); font-style: italic; }
-.hl-green { color: var(--green); }
+.hl-key     { color: var(--blue); }
+.hl-warn    { color: var(--red);    font-weight: 500; }
+.hl-tip     { color: var(--teal); }
+.hl-zone    { color: var(--amber); }
+.hl-comment { color: var(--dim);    font-style: italic; }
+.hl-green   { color: var(--green); }
+.hl-purple  { color: var(--purple); }
 
 /* OUTPUT */
 .output-section { margin-top: 1rem; }
 .output-title { font-size: 12px; color: var(--muted); margin-bottom: .5rem; font-weight: 500; }
 .output-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
 .output-item {
-  font-size: 12px;
-  padding: .4rem .7rem;
-  background: rgba(255,255,255,0.025);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  color: var(--muted);
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  line-height: 1.5;
+  font-size: 12px; padding: .4rem .7rem;
+  background: rgba(255,255,255,0.025); border: 1px solid var(--border);
+  border-radius: 5px; color: var(--muted);
+  display: flex; align-items: flex-start; gap: 6px; line-height: 1.5;
 }
 .output-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
 
@@ -323,77 +365,93 @@ pre {
   padding: 1.2rem 1.3rem;
   margin-bottom: 2rem;
 }
-.dna-panel-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--gold);
-  margin-bottom: .9rem;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+.dna-panel-title { font-size: 13px; font-weight: 600; color: var(--gold); margin-bottom: .9rem; display: flex; align-items: center; gap: 6px; }
 .dna-list { list-style: none; }
 .dna-list li {
-  padding: .5rem 0;
-  font-size: 13px;
-  color: var(--muted);
+  padding: .5rem 0; font-size: 13px; color: var(--muted);
   border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  line-height: 1.55;
+  display: flex; align-items: flex-start; gap: 10px; line-height: 1.55;
 }
 .dna-list li:last-child { border-bottom: none; }
 .dna-num {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--gold);
-  background: var(--gold-dim);
-  border: 1px solid var(--gold-border);
-  border-radius: 3px;
-  padding: 1px 5px;
-  flex-shrink: 0;
-  margin-top: 3px;
+  font-family: var(--mono); font-size: 10px; color: var(--gold);
+  background: var(--gold-dim); border: 1px solid var(--gold-border);
+  border-radius: 3px; padding: 1px 5px; flex-shrink: 0; margin-top: 3px;
 }
 
 /* WORKFLOW */
-.workflow {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-bottom: 2rem;
-}
+.workflow { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin-bottom: 2rem; }
 .wf-step {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: .5rem .85rem;
-  font-size: 12px;
-  color: var(--muted);
-  text-align: center;
-  min-width: 88px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: .5rem .85rem; font-size: 12px; color: var(--muted);
+  text-align: center; min-width: 88px;
 }
 .wf-step strong { display: block; font-size: 10.5px; color: var(--text); margin-bottom: 1px; font-family: var(--mono); }
+.wf-step.highlight { border-color: rgba(74,143,217,0.35); background: var(--blue-dim); }
+.wf-step.highlight strong { color: #6aaee8; }
 .wf-arrow { color: var(--dim); padding: 0 2px; font-size: 13px; }
 
 /* LIMIT BOX */
 .limit-box {
-  background: rgba(217,92,92,0.06);
-  border: 1px solid rgba(217,92,92,0.2);
-  border-radius: 6px;
-  padding: .65rem 1rem;
-  font-size: 12.5px;
-  color: var(--muted);
-  margin-top: 1rem;
-  line-height: 1.6;
+  background: rgba(217,92,92,0.06); border: 1px solid rgba(217,92,92,0.2);
+  border-radius: 6px; padding: .65rem 1rem; font-size: 12.5px; color: var(--muted);
+  margin-top: 1rem; line-height: 1.6;
 }
 .limit-box strong { color: var(--red); }
+
+/* INFO BOX */
+.info-box {
+  background: rgba(74,143,217,0.06); border: 1px solid rgba(74,143,217,0.2);
+  border-radius: 6px; padding: .65rem 1rem; font-size: 12.5px; color: var(--muted);
+  margin-bottom: 1.2rem; line-height: 1.6;
+}
+.info-box strong { color: var(--blue); }
+
+/* LAYER 2 INTRO */
+.layer2-intro {
+  background: linear-gradient(135deg, rgba(74,143,217,0.07) 0%, rgba(61,191,170,0.05) 100%);
+  border: 1px solid rgba(74,143,217,0.2);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.5rem;
+  margin-bottom: 2rem;
+}
+.layer2-intro-title {
+  font-size: 13px; font-weight: 700; color: #6aaee8;
+  margin-bottom: .6rem; display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono);
+}
+.layer2-intro p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* FLOW CONNECTOR */
+.flow-connector {
+  display: flex; align-items: center; gap: 10px;
+  padding: .7rem 1rem; margin-bottom: 2rem;
+  background: rgba(255,255,255,0.025); border: 1px solid var(--border);
+  border-radius: 6px; font-size: 12px; color: var(--dim);
+}
+.flow-connector strong { color: var(--text); font-family: var(--mono); font-size: 11px; }
+
+/* EXAMPLE BLOCK (Layer 2 specific) */
+.example-block {
+  background: rgba(61,191,170,0.04);
+  border: 1px solid rgba(61,191,170,0.18);
+  border-radius: 6px;
+  padding: .9rem 1rem;
+  margin-top: .8rem;
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+.example-block-title {
+  font-family: var(--mono); font-size: 10px; color: var(--teal);
+  margin-bottom: .5rem; letter-spacing: .06em;
+}
 
 /* PRINT */
 @media print {
   body { background: #fff; color: #111; }
   .header { background: #f5f5f5; border-bottom: 2px solid #c9a84c; }
+  .tab-bar { display: none; }
+  .tab-panel { display: block !important; }
   .prompt-block { border: 1px solid #ddd; }
   pre { background: #f8f8f8; color: #111; }
   .card-body { display: block !important; }
@@ -406,25 +464,44 @@ pre {
   .output-grid { grid-template-columns: 1fr; }
   .header h1 { font-size: 1.35rem; }
   .card-zone-tags { display: none; }
+  .tab-btn { padding: .8rem .9rem; }
+  .tab-sub { display: none; }
 }
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
-  <div class="header-tag">SAR Intelligence Hub — นครราชสีมา <span class="version-badge">v2 · สมศ.รอบ5</span></div>
-  <h1>ชุด Prompt ตรวจ SAR โรงเรียนเอกชน<br>สำหรับ NotebookLM</h1>
-  <p>Merge จากชุดเก่า (DNA ผู้ทรงฯ จริง) + ชุดใหม่ (Zone A/C/D · สมศ. รอบ 5 · วนทุกโรงใน Zone D)<br>
+  <div class="header-tag">SAR Intelligence Hub — นครราชสีมา <span class="version-badge">v3 · สมศ.รอบ5</span></div>
+  <h1>ชุด Prompt ตรวจ SAR โรงเรียนเอกชน<br>สำหรับ NotebookLM + Gemini Gem</h1>
+  <p>2-Layer System: Layer 1 = NotebookLM (P0–P5) วิเคราะห์ SAR รายโรง · Layer 2 = Gemini Gem สร้าง Gap Report + คำแนะนำพร้อมตัวอย่างเฉพาะโรง<br>
      ครอบคลุมโรงเรียนเอกชน 112 แห่ง จังหวัดนครราชสีมา แยกเครือข่าย 1–6</p>
   <div class="header-meta">
-    <span class="meta-item"><span class="meta-dot"></span>P0 + P1–P5 ครบชุด</span>
+    <span class="meta-item"><span class="meta-dot"></span>Layer 1: NotebookLM (P0–P5)</span>
+    <span class="meta-item"><span class="meta-dot blue"></span>Layer 2: Gemini Gem (Gap Report)</span>
     <span class="meta-item"><span class="meta-dot"></span>3 Zone (A · C · D)</span>
     <span class="meta-item"><span class="meta-dot"></span>สมศ. รอบ 5 (2567–2571)</span>
     <span class="meta-item"><span class="meta-dot"></span>DNA ผู้ทรงฯ 5 รูปแบบ</span>
-    <span class="meta-item"><span class="meta-dot"></span>ศึกษาธิการจังหวัดนครราชสีมา</span>
   </div>
 </div>
 
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('layer1', this)">
+    <span class="tab-dot"></span>
+    <span class="tab-label">Layer 1 — NotebookLM</span>
+    <span class="tab-sub">P0 · P1 · P2 · P3 · P4 · P5</span>
+  </button>
+  <button class="tab-btn layer2" onclick="switchTab('layer2', this)">
+    <span class="tab-dot blue"></span>
+    <span class="tab-label">Layer 2 — Gemini Gem</span>
+    <span class="tab-sub">System Prompt · Gap Report</span>
+  </button>
+</div>
+
+<!-- ==================== LAYER 1 ==================== -->
+<div id="layer1" class="tab-panel active">
 <div class="container">
 
   <!-- ZONE LEGEND -->
@@ -462,9 +539,9 @@ pre {
     <span class="wf-arrow">→</span>
     <div class="wf-step"><strong>P4</strong>สอดคล้อง</div>
     <span class="wf-arrow">→</span>
-    <div class="wf-step"><strong>P5</strong>สรุป+แนะนำ</div>
+    <div class="wf-step"><strong>P5</strong>สรุป Fact Sheet</div>
     <span class="wf-arrow">→</span>
-    <div class="wf-step"><strong>Gemini Gem</strong>Gap Report</div>
+    <div class="wf-step highlight"><strong>Layer 2</strong>Gemini Gem</div>
   </div>
 
   <!-- DNA PANEL -->
@@ -839,7 +916,7 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
     <div class="section-header">
       <span class="section-num">P5</span>
       <span class="section-title">สรุป SAR FACT SHEET + คำแนะนำแก้ไข</span>
-      <span class="section-sub">DNA 1–5 · ส่งต่อ Gemini Gem</span>
+      <span class="section-sub">DNA 1–5 · ส่งต่อ Gemini Gem Layer 2</span>
     </div>
     <div class="prompt-card">
       <div class="card-head" onclick="toggle(this)">
@@ -923,9 +1000,309 @@ SAR FACT SHEET — โรงเรียนที่ [X/N]
     </div>
   </div>
 
-</div>
+</div><!-- /container layer1 -->
+</div><!-- /tab-panel layer1 -->
+
+
+<!-- ==================== LAYER 2 ==================== -->
+<div id="layer2" class="tab-panel">
+<div class="container">
+
+  <!-- LAYER 2 INTRO -->
+  <div class="layer2-intro">
+    <div class="layer2-intro-title">◈ Layer 2 — Gemini Gem · Gap Report Engine</div>
+    <p>รับ SAR Fact Sheet จาก Layer 1 (P5) แล้วสร้าง Gap Report + คำแนะนำแก้ไขพร้อม<strong style="color:#6aaee8"> ตัวอย่างเฉพาะเจาะจงจากบริบทจริงของโรงเรียนนั้น</strong> — ไม่ใช้ตัวอย่างกลางๆ ที่ใช้กับทุกโรงเหมือนกัน<br><br>
+    วิธีใช้: Copy ข้อความ SAR Fact Sheet ทั้งหมดจาก P5 → วาง + ส่งให้ Gemini Gem ที่ตั้งค่า System Prompt ไว้แล้ว</p>
+  </div>
+
+  <!-- FLOW CONNECTOR -->
+  <div class="flow-connector">
+    <span>🔗</span>
+    <span><strong>Layer 1 Output (P5)</strong> → Copy SAR Fact Sheet ทุกโรง →</span>
+    <span style="color: #6aaee8; font-weight: 600;">Gemini Gem (System Prompt ด้านล่าง)</span>
+    <span>→</span>
+    <span><strong>Gap Report + คำแนะนำเฉพาะโรง</strong></span>
+  </div>
+
+  <!-- WORKFLOW L2 -->
+  <div class="workflow">
+    <div class="wf-step highlight"><strong>Input</strong>SAR Fact Sheet (P5)</div>
+    <span class="wf-arrow">→</span>
+    <div class="wf-step highlight"><strong>G1</strong>System Prompt</div>
+    <span class="wf-arrow">→</span>
+    <div class="wf-step highlight"><strong>G2</strong>Gap Analysis</div>
+    <span class="wf-arrow">→</span>
+    <div class="wf-step highlight"><strong>G3</strong>ตัวอย่างเฉพาะโรง</div>
+    <span class="wf-arrow">→</span>
+    <div class="wf-step highlight"><strong>G4</strong>Priority Action</div>
+    <span class="wf-arrow">→</span>
+    <div class="wf-step highlight"><strong>Output</strong>Gap Report</div>
+  </div>
+
+  <!-- ===== SYSTEM PROMPT ===== -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num blue">SYS</span>
+      <span class="section-title">System Prompt — ตั้งค่าใน Gemini Gem ครั้งเดียว</span>
+      <span class="section-sub">วาง Prompt นี้ใน "System Instructions" ของ Gem</span>
+    </div>
+
+    <div class="info-box">
+      <strong>📌 วิธีตั้งค่า:</strong> เปิด Gemini Advanced → "Gems" → "Create a Gem" → วาง Prompt ด้านล่างในช่อง "Instructions" → บันทึก → ใช้ Gem นี้รับ Input จาก P5 ได้เลย
+    </div>
+
+    <div class="prompt-card layer2-card master">
+      <div class="card-head" onclick="toggle(this)">
+        <span class="card-badge badge-sys">SYSTEM</span>
+        <span class="card-title">Gemini Gem System Prompt — Gap Report Engine v1</span>
+        <span class="toggle-icon">▶</span>
+      </div>
+      <div class="card-body open">
+        <div class="purpose-box blue">คัดลอก Prompt ทั้งหมดนี้วางใน "Instructions" ของ Gemini Gem — ไม่ต้องส่งเป็น Message แต่ละครั้ง</div>
+        <div class="dna-row">
+          <span class="dna-tag blue">รับ SAR Fact Sheet จาก P5</span>
+          <span class="dna-tag blue">Gap Analysis รายมาตรฐาน</span>
+          <span class="dna-tag blue">ตัวอย่างเฉพาะโรง</span>
+          <span class="dna-tag blue">Priority Action Plan</span>
+        </div>
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-lang">gemini gem · system instructions</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
+          </div>
+          <pre><span class="hl-bracket">===ROLE===</span>
+คุณคือ SAR Gap Report Specialist ที่ทำงานร่วมกับผู้ทรงคุณวุฒิด้านการประกันคุณภาพการศึกษา
+ความเชี่ยวชาญ: วิเคราะห์ช่องว่าง (Gap) ระหว่างสภาพจริงของ SAR กับเกณฑ์ สมศ. รอบ 5 (พ.ศ. 2567–2571)
+และแปลง Gap เหล่านั้นเป็น <span class="hl-tip">คำแนะนำแก้ไขที่ใช้ข้อมูลจริงจากโรงเรียนนั้นๆ ทุกครั้ง</span>
+
+<span class="hl-bracket">===INPUT ที่จะได้รับ===</span>
+SAR Fact Sheet จาก NotebookLM (Layer 1 / P5) ของโรงเรียนตั้งแต่ 1 โรงขึ้นไป
+แต่ละ Fact Sheet มี 8 ส่วน: มาตรฐานที่ครบ · ที่ขาด · ตัวเลข · จุดเด่น · สิ่งที่ขาด · จุดไม่สอดคล้อง · คำแนะนำ · ความพร้อม
+
+<span class="hl-bracket">===CORE PRINCIPLE — ตัวอย่างเฉพาะเจาะจง===</span>
+<span class="hl-warn">กฎสำคัญ: ทุก Gap ที่ระบุ ต้องมีตัวอย่างที่ดึงมาจากบริบทจริงของโรงเรียนนั้น</span>
+- ดึงชื่อโครงการ ชื่อมาตรฐาน ตัวเลข หรือข้อความจริงจาก Fact Sheet มาใช้ในตัวอย่าง
+- ห้ามเขียนตัวอย่างกลางๆ เช่น "ควรระบุชื่อเอกสาร" → ต้องเขียนว่า "ควรระบุชื่อเอกสารสำหรับโครงการ [ชื่อโครงการจริง] เช่น รายงานผลการดำเนินโครงการ [ชื่อโครงการ] ปีการศึกษา [ปี]"
+- ถ้า Fact Sheet ไม่มีข้อมูลเพียงพอ ให้ระบุ "⚠ ต้องการข้อมูลเพิ่มเติม: [ระบุว่าขาดอะไร]" แทนการเขียนตัวอย่างกลางๆ
+
+<span class="hl-bracket">===โครงสร้าง OUTPUT ที่ต้องสร้าง===</span>
+
+<span class="hl-zone">สำหรับทุกโรงเรียนที่ได้รับ Fact Sheet ให้สร้าง:</span>
+
+<span class="hl-key">╔══════════════════════════════════════════════
+GAP REPORT — [ชื่อโรงเรียน] (เครือข่ายที่ [X])
+ปีการศึกษา [ปี] · ระดับ [ระดับ]
+══════════════════════════════════════════════╗</span>
+
+<span class="hl-key">【SECTION A】 GAP MATRIX รายมาตรฐาน</span>
+สร้างตาราง Gap สำหรับแต่ละมาตรฐาน สมศ. รอบ 5:
+
+มาตรฐานที่ 1 / มาตรฐานที่ 2 / มาตรฐานที่ 3 (และระดับปฐมวัยถ้ามี)
+
+สำหรับแต่ละมาตรฐาน ระบุ:
+  📍 สภาพปัจจุบัน (จาก Fact Sheet)
+  🎯 เกณฑ์ที่ สมศ. รอบ 5 กำหนด
+  ❌ Gap ที่พบ: [ระบุ Gap ที่ชัดเจน]
+  💡 คำแนะนำ + <span class="hl-warn">ตัวอย่างเฉพาะโรงนี้</span>: [ดึงข้อมูลจริงจาก Fact Sheet มาใส่]
+
+<span class="hl-key">【SECTION B】 GAP เชิงโครงสร้าง SAR</span>
+วิเคราะห์ Gap ที่ไม่ได้อยู่ในรายมาตรฐาน แต่เป็นปัญหาโครงสร้างเอกสาร:
+
+สำหรับแต่ละ Gap ที่พบ:
+  ❌ Gap: [ระบุปัญหา]
+  📌 พบที่: [ระบุตำแหน่ง/หน้า จาก Fact Sheet]
+  💡 แก้ไขด้วย: [คำแนะนำ]
+  ✏️ ตัวอย่างเฉพาะโรงนี้:
+     ❌ ที่มีอยู่: "[ข้อความ/ข้อมูลจริงจาก Fact Sheet]"
+     ✅ ที่ควรเป็น: "[เขียนใหม่โดยใช้บริบทจริงของโรงเรียนนี้]"
+
+<span class="hl-key">【SECTION C】 GAP ด้านตัวเลขและภาษา</span>
+รายการตัวเลขที่น่าสงสัย + ตัวอย่างภาษาที่ต้องแก้ไข
+
+สำหรับ Gap ตัวเลข:
+  🔴 ตัวเลขที่น่าสงสัย: [ระบุตัวเลขจริงจาก Fact Sheet เช่น "โครงการ X: เป้า 120 คน / ผล 120 คน = 100%"]
+  ❓ ข้อสังเกต: [เหตุผลที่น่าสงสัย]
+  💡 แนะนำ: [วิธีปรับการรายงานให้น่าเชื่อถือ]
+
+สำหรับ Gap ภาษา (ถ้า Fact Sheet มีข้อมูล):
+  ❌ ภาษาเดิม: "[ยกข้อความจาก Fact Sheet]"
+  ✅ ควรแก้เป็น: "[เขียนใหม่ให้เป็นวิชาการ]"
+
+<span class="hl-key">【SECTION D】 PRIORITY ACTION PLAN</span>
+จัดลำดับความเร่งด่วนของการแก้ไข ใน 3 ระดับ:
+
+🔴 แก้ก่อน (ภายใน 2 สัปดาห์ — Critical for สมศ. รอบ 5):
+   [รายการที่หากไม่แก้ จะกระทบผลการประเมินโดยตรง]
+   → Action: [ระบุสิ่งที่ต้องทำ + ใช้ข้อมูลโรงเรียนนี้]
+
+🟡 แก้ระยะกลาง (ภายใน 1 เดือน — สำคัญแต่ไม่เร่งด่วน):
+   [รายการที่ควรแก้เพื่อยกคุณภาพ SAR]
+   → Action: [ระบุสิ่งที่ต้องทำ]
+
+🟢 แก้ระยะยาว (ปีการศึกษาหน้า — ปรับปรุงเชิงระบบ):
+   [รายการที่ต้องวางแผนเชิงระบบ]
+   → Action: [ระบุสิ่งที่ต้องทำ]
+
+<span class="hl-key">【SECTION E】 สรุปความพร้อมรับ สมศ. รอบ 5</span>
+  สถานะ: 🟢 พร้อม / 🟡 ต้องปรับปรุงก่อน / 🔴 ยังไม่พร้อม
+  Gap วิกฤต (ถ้ามี): [รายการที่เป็น Showstopper]
+  Gap ที่แก้ได้เร็ว: [รายการที่ใช้เวลาน้อยแต่ Impact สูง]
+  ประมาณการเวลาเพื่อให้พร้อม: [X สัปดาห์/เดือน]
+
+<span class="hl-bracket">===เมื่อวิเคราะห์ครบทุกโรง===</span>
+สร้าง <span class="hl-tip">CLUSTER SUMMARY</span> รวม: Gap ที่พบซ้ำกันหลายโรง (≥ 3 โรง) → ระบุว่าเป็นปัญหาระดับเครือข่าย
+ไม่ต้องสร้าง Cluster Summary ถ้ามีแค่ 1 โรง
+
+<span class="hl-bracket">===สิ่งที่ห้ามทำ===</span>
+<span class="hl-warn">- ห้ามเขียนตัวอย่างกลางๆ ที่ไม่ได้ดึงข้อมูลจากโรงเรียนนั้น</span>
+<span class="hl-warn">- ห้ามประเมินระดับคุณภาพเองโดยไม่มีข้อมูลสนับสนุน</span>
+<span class="hl-warn">- ห้ามเพิ่ม Gap ที่ไม่มีอยู่ใน Fact Sheet (ห้ามคาดเดา)</span>
+- ถ้าข้อมูลไม่พอ ให้ระบุ "⚠ ต้องการข้อมูลเพิ่มเติมจาก SAR ต้นฉบับ: [ระบุว่าขาดอะไร]"</pre>
+        </div>
+        <div class="output-section">
+          <div class="output-title">ผลลัพธ์ที่คาดหวังจาก Layer 2</div>
+          <div class="output-grid">
+            <div class="output-item"><span class="output-icon">✓</span>Gap Matrix รายมาตรฐาน ทุกโรง</div>
+            <div class="output-item"><span class="output-icon">✓</span>ตัวอย่างเฉพาะโรง — ดึงข้อมูลจริงจาก Fact Sheet</div>
+            <div class="output-item"><span class="output-icon">✓</span>Priority Action 3 ระดับ พร้อม Timeline</div>
+            <div class="output-item"><span class="output-icon">✓</span>Cluster Summary — Gap ระดับเครือข่าย</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== G2: วิธีส่ง INPUT ===== -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num blue">G2</span>
+      <span class="section-title">วิธีส่ง Input เข้า Gemini Gem</span>
+      <span class="section-sub">ใช้ทุกครั้งที่ต้องการ Gap Report</span>
+    </div>
+    <div class="prompt-card layer2-card">
+      <div class="card-head" onclick="toggle(this)">
+        <span class="card-badge badge-gap">GAP INPUT</span>
+        <span class="card-title">Template Message สำหรับส่ง Fact Sheet เข้า Gemini Gem</span>
+        <span class="toggle-icon">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="purpose-box blue">ใช้ Template นี้ทุกครั้งเมื่อต้องการ Gap Report — วาง SAR Fact Sheet จาก P5 แทนที่ [วาง Fact Sheet ที่นี่] แล้วส่ง</div>
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-lang">g2 · gap report input template</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
+          </div>
+          <pre>ด้านล่างนี้คือ SAR Fact Sheet จาก NotebookLM Layer 1 สำหรับโรงเรียน [จำนวน N] แห่ง
+<span class="hl-key">เครือข่ายที่ [X]</span> — วิเคราะห์ตามลำดับ สร้าง Gap Report ครบทุก Section (A–E) ให้ทุกโรง
+
+<span class="hl-warn">ข้อกำหนดสำคัญ:</span>
+- ทุก Gap ต้องมีตัวอย่างที่ดึงจากบริบทจริงของโรงเรียนนั้น (ชื่อโครงการ ตัวเลข ข้อความจริง)
+- ถ้าข้อมูลไม่พอ ให้ระบุ "⚠ ต้องการข้อมูลเพิ่มเติม" แทนการเดา
+- สร้าง Cluster Summary ท้ายสุดถ้ามีโรงเรียนตั้งแต่ 2 โรงขึ้นไป
+
+<span class="hl-bracket">══════════════════════════════════════
+[วาง SAR Fact Sheet ทั้งหมดจาก P5 ที่นี่]
+══════════════════════════════════════</span></pre>
+        </div>
+
+        <div class="example-block">
+          <div class="example-block-title">✦ ตัวอย่าง Output ที่ถูกต้อง vs ผิด — Gap พร้อม Context เฉพาะโรง</div>
+          <div style="font-size: 12.5px; line-height: 1.75; color: var(--muted);">
+            <div style="margin-bottom: .7rem;">
+              <span style="color: var(--red); font-family: var(--mono); font-size: 11px;">❌ ตัวอย่างกลางๆ (ห้ามใช้)</span><br>
+              "ควรระบุชื่อเอกสารหลักฐานให้ชัดเจนในแต่ละมาตรฐาน และแยกรายระดับการศึกษา"
+            </div>
+            <div>
+              <span style="color: var(--green); font-family: var(--mono); font-size: 11px;">✅ ตัวอย่างเฉพาะโรง (ถูกต้อง)</span><br>
+              "โรงเรียนนี้ระบุหลักฐานมาตรฐานที่ 2 ว่า 'โครงการพัฒนาครูสู่มืออาชีพ' แต่ไม่มีชื่อเอกสารกำกับ ควรแก้เป็น: (1) แผนพัฒนาบุคลากร ปีการศึกษา [ปี], (2) รายงานผลการอบรม 'โครงการพัฒนาครูสู่มืออาชีพ' ครั้งที่ 1–2, (3) ภาพกิจกรรม + บัญชีรายชื่อผู้เข้าร่วม"
+            </div>
+          </div>
+        </div>
+
+        <div class="output-section">
+          <div class="output-title">ผลลัพธ์ที่คาดหวัง</div>
+          <div class="output-grid">
+            <div class="output-item"><span class="output-icon">✓</span>Gap Report Section A–E ทุกโรง</div>
+            <div class="output-item"><span class="output-icon">✓</span>ตัวอย่างดึงข้อมูลโรงนั้นๆ ทุก Gap</div>
+            <div class="output-item"><span class="output-icon">✓</span>Priority Action พร้อม Timeline</div>
+            <div class="output-item"><span class="output-icon">✓</span>Cluster Summary ถ้ามี ≥ 2 โรง</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== G3: USAGE GUIDE ===== -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num blue">G3</span>
+      <span class="section-title">คู่มือการใช้งาน Layer 2</span>
+      <span class="section-sub">ขั้นตอนตั้งแต่ P5 → Gap Report</span>
+    </div>
+    <div class="prompt-card layer2-card">
+      <div class="card-head" onclick="toggle(this)">
+        <span class="card-badge badge-usage">GUIDE</span>
+        <span class="card-title">ขั้นตอนการตั้งค่าและใช้งาน Gemini Gem</span>
+        <span class="toggle-icon">▶</span>
+      </div>
+      <div class="card-body">
+        <div class="purpose-box blue">ทำตามขั้นตอนนี้ครั้งแรกครั้งเดียว จากนั้นใช้ซ้ำได้ทุกเครือข่าย</div>
+
+        <div style="font-size: 13px; color: var(--muted); line-height: 1.8;">
+          <div style="margin-bottom: 1.2rem;">
+            <div style="font-family: var(--mono); font-size: 11px; color: var(--blue); margin-bottom: .4rem;">STEP 1 — ตั้งค่า Gem (ครั้งเดียว)</div>
+            <div>1. เปิด <strong style="color: var(--text)">gemini.google.com</strong> → คลิก "Gems" ในแถบซ้าย</div>
+            <div>2. คลิก "New Gem" → ตั้งชื่อว่า <strong style="color: var(--text)">"SAR Gap Report — นครราชสีมา"</strong></div>
+            <div>3. วาง System Prompt จาก SYS ด้านบนในช่อง "Instructions"</div>
+            <div>4. คลิก "Save" → Gem พร้อมใช้งาน</div>
+          </div>
+
+          <div style="margin-bottom: 1.2rem;">
+            <div style="font-family: var(--mono); font-size: 11px; color: var(--blue); margin-bottom: .4rem;">STEP 2 — ส่ง Input ทุกครั้ง</div>
+            <div>1. เปิด Gem "SAR Gap Report — นครราชสีมา"</div>
+            <div>2. Copy <strong style="color: var(--text)">SAR Fact Sheet ทั้งหมด</strong>จาก NotebookLM P5 (ทุกโรงในรอบนั้น)</div>
+            <div>3. วางใน Template G2 แทนที่ [วาง Fact Sheet ที่นี่]</div>
+            <div>4. ส่ง → รอ Gap Report ครบ Section A–E</div>
+          </div>
+
+          <div style="margin-bottom: 1.2rem;">
+            <div style="font-family: var(--mono); font-size: 11px; color: var(--blue); margin-bottom: .4rem;">STEP 3 — ถ้าตัวอย่างไม่เฉพาะเจาะจงพอ</div>
+            <div>ส่ง Follow-up Message:</div>
+          </div>
+        </div>
+
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-lang">follow-up · ขอตัวอย่างเฉพาะเจาะจงขึ้น</span>
+            <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
+          </div>
+          <pre>สำหรับ Gap "[ระบุ Gap ที่ต้องการ]" ของ[ชื่อโรงเรียน]
+ขอตัวอย่างที่เฉพาะเจาะจงขึ้น โดยใช้:
+- ชื่อโครงการจริงจาก Fact Sheet: [ระบุชื่อโครงการ]
+- ตัวเลขจริงที่ปรากฏ: [ระบุตัวเลข]
+- มาตรฐานที่เกี่ยวข้อง: [มาตรฐานที่ X]
+
+เขียนตัวอย่าง ❌ (ที่มีอยู่) และ ✅ (ที่ควรเป็น) ให้ครบโดยใช้บริบทข้างต้น</pre>
+        </div>
+
+        <div style="margin-top: 1rem; padding: .8rem 1rem; background: rgba(61,191,170,0.05); border: 1px solid rgba(61,191,170,0.15); border-radius: 6px; font-size: 12.5px; color: var(--muted);">
+          <strong style="color: var(--teal);">💡 Tips:</strong> Gemini Gem มี Context Window ใหญ่กว่า NotebookLM — ใส่ Fact Sheet ได้ 8–10 โรงต่อครั้ง · ถ้าต้องการ Output เป็น Markdown สำหรับ copy ไปทำรายงาน ให้เพิ่ม "ตอบเป็น Markdown ทั้งหมด" ใน G2 Template
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container layer2 -->
+</div><!-- /tab-panel layer2 -->
 
 <script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
 function toggle(head) {
   const body = head.nextElementSibling;
   const icon = head.querySelector('.toggle-icon');
