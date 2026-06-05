@@ -146,7 +146,6 @@ body {
   flex-shrink: 0;
 }
 .tab-dot.blue { background: var(--blue); }
-.tab-label { }
 .tab-sub {
   font-size: 10px;
   color: var(--dim);
@@ -471,12 +470,11 @@ pre {
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
-  <div class="header-tag">SAR Intelligence Hub — นครราชสีมา <span class="version-badge">v3 · สมศ.รอบ5</span></div>
+  <div class="header-tag">SAR Intelligence Hub — นครราชสีมา <span class="version-badge">v3.1 · สมศ.รอบ5</span></div>
   <h1>ชุด Prompt ตรวจ SAR โรงเรียนเอกชน<br>สำหรับ NotebookLM + Gemini Gem</h1>
   <p>2-Layer System: Layer 1 = NotebookLM (P0–P5) วิเคราะห์ SAR รายโรง · Layer 2 = Gemini Gem สร้าง Gap Report + คำแนะนำพร้อมตัวอย่างเฉพาะโรง<br>
-     ครอบคลุมโรงเรียนเอกชน 112 แห่ง จังหวัดนครราชสีมา แยกเครือข่าย 1–6</p>
+     ครอบคลุมโรงเรียนเอกชน 112 แห่ง จังหวัดนครราชสีมา พร้อมระบบ Tag Toggle แยกเครือข่าย 1–6</p>
   <div class="header-meta">
     <span class="meta-item"><span class="meta-dot"></span>Layer 1: NotebookLM (P0–P5)</span>
     <span class="meta-item"><span class="meta-dot blue"></span>Layer 2: Gemini Gem (Gap Report)</span>
@@ -486,7 +484,6 @@ pre {
   </div>
 </div>
 
-<!-- TAB BAR -->
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('layer1', this)">
     <span class="tab-dot"></span>
@@ -500,11 +497,9 @@ pre {
   </button>
 </div>
 
-<!-- ==================== LAYER 1 ==================== -->
 <div id="layer1" class="tab-panel active">
 <div class="container">
 
-  <!-- ZONE LEGEND -->
   <div class="zone-bar">
     <div class="zone-item za">
       <div class="zone-label">ZONE A</div>
@@ -516,22 +511,22 @@ pre {
     </div>
     <div class="zone-item zd">
       <div class="zone-label">ZONE D</div>
-      <div class="zone-desc">SAR เป้าหมายที่ตรวจ<br>แยกเครือข่าย 1–6 · ~15 โรง/เครือข่าย</div>
+      <div class="zone-desc">SAR เป้าหมายที่ตรวจ<br>ใส่ทุกไฟล์ และใช้ <span style="color:var(--red); font-weight:bold;">Tag</span> จัดการเครือข่าย</div>
     </div>
   </div>
   <div class="zone-note">
-    <strong>⚠ Zone B ถูกยกเลิก</strong> — ไม่ใช้ SAR ตัวอย่างที่ไม่ผ่านการรับรองคุณภาพ · ใช้ Zone C (before/after จากผู้ทรงฯ จริง) เป็น Few-Shot แทน
+    <strong>⚠ Zone B ถูกยกเลิก</strong> — ไม่ใช้ SAR ตัวอย่างที่ไม่ผ่านการรับรองคุณภาพ · ใช้ Zone C (before/after จากผู้ทรงฯ จริง) เป็น Few-Shot แทน<br>
+    <strong>💡 Tag Toggle เทคนิค:</strong> นำเข้า e-SAR ทั้งหมดลง Zone D ให้กำกับชื่อหรือข้อความด้วยแท็ก เช่น <code>#เครือข่ายที่1</code> ระบบจะดึงข้อมูลเฉพาะแท็กที่ระบุมาวิเคราะห์ ลดการสร้าง Notebook ย่อยหลายๆ เล่ม
   </div>
 
-  <!-- WORKFLOW -->
   <div class="workflow">
     <div class="wf-step"><strong>Zone A+C</strong>โหลดทุก NB</div>
     <span class="wf-arrow">→</span>
-    <div class="wf-step"><strong>Zone D</strong>SAR โรงเรียน</div>
+    <div class="wf-step"><strong>Zone D</strong>SAR ทุกเครือข่าย</div>
     <span class="wf-arrow">→</span>
     <div class="wf-step"><strong>P0</strong>ตั้งบทบาท</div>
     <span class="wf-arrow">→</span>
-    <div class="wf-step"><strong>P1</strong>โครงสร้าง</div>
+    <div class="wf-step"><strong>P1</strong>นับไฟล์+โครงสร้าง</div>
     <span class="wf-arrow">→</span>
     <div class="wf-step"><strong>P2</strong>หลักฐาน</div>
     <span class="wf-arrow">→</span>
@@ -544,7 +539,6 @@ pre {
     <div class="wf-step highlight"><strong>Layer 2</strong>Gemini Gem</div>
   </div>
 
-  <!-- DNA PANEL -->
   <div class="dna-panel">
     <div class="dna-panel-title">⬡ DNA การตรวจของผู้ทรงคุณวุฒิ — 5 รูปแบบสังเคราะห์จากเอกสารจริง Zone C</div>
     <ul class="dna-list">
@@ -571,7 +565,6 @@ pre {
     </ul>
   </div>
 
-  <!-- ===== P0 ===== -->
   <div class="section">
     <div class="section-header">
       <span class="section-num">P0</span>
@@ -606,7 +599,7 @@ pre {
 <span class="hl-zone">===แหล่งข้อมูลใน Notebook นี้===</span>
 Zone A: เกณฑ์มาตรฐาน สมศ. รอบ 5 · กรอบแนวทางจัดทำ SAR · ตัวบ่งชี้และค่าเป้าหมาย
 Zone C: คู่เอกสาร SAR + ไฟล์แก้ไขจากผู้ทรงคุณวุฒิจริง (Before/After · 3–4 ชุด) → ใช้เรียนรู้สไตล์การตรวจ
-Zone D: SAR โรงเรียนเป้าหมายที่ต้องตรวจวันนี้ → <span class="hl-warn">วิเคราะห์แยกทีละโรง ครบทุกไฟล์ใน Zone D</span>
+Zone D: SAR โรงเรียนเป้าหมาย (รวมทั้งหมดไว้ที่นี่ โดยจะใช้เทคนิค Tag ในการกรองข้อมูล)
 
 <span class="hl-zone">===หลักการตรวจที่ต้องยึดถือ (DNA 5 รูปแบบ)===</span>
 DNA 1: ตรวจ<span class="hl-warn">ความสอดคล้องภายใน</span> — จุดเด่นกับจุดด้อยต้องไม่ขัดแย้งกัน
@@ -636,24 +629,23 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
     </div>
   </div>
 
-  <!-- ===== P1 ===== -->
   <div class="section">
     <div class="section-header">
       <span class="section-num">P1</span>
-      <span class="section-title">ตรวจโครงสร้างและความครบถ้วนของ SAR</span>
-      <span class="section-sub">DNA 2, 5</span>
+      <span class="section-title">นับจำนวนไฟล์ + ตรวจโครงสร้างและความครบถ้วน</span>
+      <span class="section-sub">DNA 2, 5 · อัปเดตเพิ่ม Tag Filter</span>
     </div>
     <div class="prompt-card">
       <div class="card-head" onclick="toggle(this)">
         <span class="card-badge badge-p1">STEP 1</span>
-        <span class="card-title">ตรวจโครงสร้าง บทสรุปผู้บริหาร และภาคผนวก</span>
+        <span class="card-title">กรองแท็ก นับไฟล์ ตรวจโครงสร้างและภาคผนวก</span>
         <div class="card-zone-tags">
           <span class="zone-tag zt-a">A</span><span class="zone-tag zt-c">C</span><span class="zone-tag zt-d">D</span>
         </div>
         <span class="toggle-icon">▶</span>
       </div>
       <div class="card-body">
-        <div class="purpose-box">ตรวจความครบถ้วนของโครงสร้าง SAR เทียบกับมาตรฐาน สมศ. รอบ 5 ใน Zone A และเทียบสไตล์กับ Zone C</div>
+        <div class="purpose-box">ระบุเป้าหมายโดยใช้ Tag Toggle เพื่อให้ดึงข้อมูลถูกกลุ่ม และตรวจความครบถ้วนของโครงสร้าง SAR เทียบกับมาตรฐาน สมศ. รอบ 5</div>
         <div class="dna-row">
           <span class="dna-tag active">DNA 2: หลักฐานเป็นข้อๆ</span>
           <span class="dna-tag active">DNA 5: วันที่/หลักสูตร</span>
@@ -661,13 +653,18 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
         </div>
         <div class="prompt-block">
           <div class="prompt-block-head">
-            <span class="prompt-lang">p1 · โครงสร้าง SAR</span>
+            <span class="prompt-lang">p1 · นับไฟล์ + โครงสร้าง SAR</span>
             <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
           </div>
-          <pre><span class="hl-warn">นับจำนวนไฟล์ SAR ทั้งหมดใน Zone D ก่อน แล้วแจ้งว่ามีกี่โรงเรียน</span>
-จากนั้นตรวจโครงสร้าง SAR แต่ละโรงตามลำดับ โดยเทียบกับ Zone A และสไตล์ Zone C
+          <pre><span class="hl-warn">【ขั้นตอนที่ 0】 การนับจำนวนไฟล์และจำกัดขอบเขตข้อมูล</span>
+ก่อนเริ่มการวิเคราะห์ ให้นับจำนวนไฟล์ SAR ใน Zone D ที่ตรงกับแท็ก <span class="hl-tip">[ระบุแท็กที่ต้องการ เช่น #เครือข่ายที่1]</span> 
+จากนั้นให้แจ้งสรุปในบรรทัดแรกว่า "ตรวจสอบพบไฟล์ SAR สำหรับแท็กนี้ จำนวนทั้งหมด [N] โรงเรียน" 
+<span class="hl-comment">**ห้ามดึงข้อมูลของโรงเรียนนอกเหนือจากแท็กนี้มาปะปนเด็ดขาด**</span>
 
-<span class="hl-zone">ทำซ้ำสำหรับทุกโรงเรียนใน Zone D:</span>
+<span class="hl-warn">【ขั้นตอนที่ 1】 ตรวจโครงสร้าง SAR แต่ละโรงตามลำดับ</span>
+เทียบกับ Zone A และสไตล์ Zone C
+
+<span class="hl-zone">ทำซ้ำสำหรับทุกโรงเรียนที่กรองได้:</span>
 ══ โรงเรียนที่ [X/N]: [ชื่อโรงเรียน] ══
 
 <span class="hl-key">1. ความครบถ้วนของส่วนประกอบ SAR (เทียบ Zone A)</span>
@@ -695,7 +692,7 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
         <div class="output-section">
           <div class="output-title">ผลลัพธ์ที่คาดหวัง</div>
           <div class="output-grid">
-            <div class="output-item"><span class="output-icon">✓</span>รายงานโครงสร้างครบทุกโรงใน Zone D</div>
+            <div class="output-item"><span class="output-icon">✓</span>นับจำนวนและดึงข้อมูลเฉพาะเครือข่ายที่เลือก</div>
             <div class="output-item"><span class="output-icon">✓</span>ระบุปัญหาโครงสร้าง + เทียบ Zone C</div>
             <div class="output-item"><span class="output-icon">✓</span>ตัวอย่างการแก้ไขที่เป็นรูปธรรม</div>
             <div class="output-item"><span class="output-icon">✓</span>สรุปยืนยันจำนวนโรงที่ตรวจครบ</div>
@@ -705,7 +702,6 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
     </div>
   </div>
 
-  <!-- ===== P2 ===== -->
   <div class="section">
     <div class="section-header">
       <span class="section-num">P2</span>
@@ -715,7 +711,7 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
     <div class="prompt-card">
       <div class="card-head" onclick="toggle(this)">
         <span class="card-badge badge-p2">STEP 2</span>
-        <span class="card-title">ตรวจ Evidence List แยกรายมาตรฐาน ทุกโรงใน Zone D</span>
+        <span class="card-title">ตรวจ Evidence List แยกรายมาตรฐาน ทุกโรงที่กรองได้</span>
         <div class="card-zone-tags">
           <span class="zone-tag zt-a">A</span><span class="zone-tag zt-c">C</span><span class="zone-tag zt-d">D</span>
         </div>
@@ -732,7 +728,7 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
             <span class="prompt-lang">p2 · หลักฐานเชิงประจักษ์</span>
             <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
           </div>
-          <pre><span class="hl-zone">ทำซ้ำสำหรับทุกโรงเรียนใน Zone D:</span>
+          <pre><span class="hl-zone">ทำซ้ำสำหรับทุกโรงเรียนที่กรองได้ (ชุดเดิมจาก P1):</span>
 ══ โรงเรียนที่ [X/N]: [ชื่อโรงเรียน] ══
 
 <span class="hl-key">ตรวจหลักฐานสนับสนุนผลการประเมินตนเอง แยกรายมาตรฐานตาม Zone A:</span>
@@ -775,7 +771,6 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
     </div>
   </div>
 
-  <!-- ===== P3 ===== -->
   <div class="section">
     <div class="section-header">
       <span class="section-num">P3</span>
@@ -785,7 +780,7 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
     <div class="prompt-card">
       <div class="card-head" onclick="toggle(this)">
         <span class="card-badge badge-p3">STEP 3</span>
-        <span class="card-title">ตรวจตัวเลขสงสัย + ภาษาไม่เป็นทางการ ทุกโรงใน Zone D</span>
+        <span class="card-title">ตรวจตัวเลขสงสัย + ภาษาไม่เป็นทางการ ทุกโรงที่กรองได้</span>
         <div class="card-zone-tags">
           <span class="zone-tag zt-c">C</span><span class="zone-tag zt-d">D</span>
         </div>
@@ -803,7 +798,7 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
             <span class="prompt-lang">p3 · ตัวเลข + ภาษา</span>
             <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
           </div>
-          <pre><span class="hl-zone">ทำซ้ำสำหรับทุกโรงเรียนใน Zone D:</span>
+          <pre><span class="hl-zone">ทำซ้ำสำหรับทุกโรงเรียนที่กรองได้ (ชุดเดิม):</span>
 ══ โรงเรียนที่ [X/N]: [ชื่อโรงเรียน] ══
 
 <span class="hl-key">ส่วนที่ 1: ตรวจความน่าเชื่อถือของตัวเลข (DNA 4)</span>
@@ -846,7 +841,6 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
     </div>
   </div>
 
-  <!-- ===== P4 ===== -->
   <div class="section">
     <div class="section-header">
       <span class="section-num">P4</span>
@@ -873,7 +867,7 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
             <span class="prompt-lang">p4 · ความสอดคล้องภายใน</span>
             <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
           </div>
-          <pre><span class="hl-zone">ทำซ้ำสำหรับทุกโรงเรียนใน Zone D:</span>
+          <pre><span class="hl-zone">ทำซ้ำสำหรับทุกโรงเรียนที่กรองได้ (ชุดเดิม):</span>
 ══ โรงเรียนที่ [X/N]: [ชื่อโรงเรียน] ══
 
 <span class="hl-key">ตรวจความสอดคล้องภายใน 3 ระดับ:</span>
@@ -911,7 +905,6 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
     </div>
   </div>
 
-  <!-- ===== P5 ===== -->
   <div class="section">
     <div class="section-header">
       <span class="section-num">P5</span>
@@ -928,7 +921,7 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
         <span class="toggle-icon">▶</span>
       </div>
       <div class="card-body">
-        <div class="purpose-box">สรุปผลการตรวจ P1–P4 ทุกโรงเป็น SAR Fact Sheet มาตรฐาน พร้อมคำแนะนำแก้ไขเชิงรูปธรรม — เอกสารนี้จะถูกส่งต่อไปยัง Gemini Gem (Layer 2) เพื่อทำ Gap Report</div>
+        <div class="purpose-box">สรุปผลการตรวจ P1–P4 ทุกโรงเป็น SAR Fact Sheet มาตรฐาน พร้อมคำแนะนำแก้ไขเชิงรูปธรรม — เอกสารนี้จะถูกส่งต่อไปยัง Gemini Gem (Layer 2) เพื่อทำ Final Gap Report</div>
         <div class="dna-row">
           <span class="dna-tag active">DNA 1–5 ทั้งหมด</span>
           <span class="dna-tag">สรุปครบวงจร</span>
@@ -939,7 +932,7 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
             <span class="prompt-lang">p5 · SAR Fact Sheet + คำแนะนำ</span>
             <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
           </div>
-          <pre>สรุปผลการตรวจ P1–P4 ทั้งหมด และสร้าง SAR Fact Sheet สำหรับทุกโรงเรียนใน Zone D
+          <pre>สรุปผลการตรวจ P1–P4 ทั้งหมด และสร้าง SAR Fact Sheet สำหรับโรงเรียนที่กรองได้เท่านั้น
 
 <span class="hl-zone">ทำซ้ำสำหรับทุกโรงเรียน:</span>
 
@@ -947,7 +940,7 @@ DNA 5: ตรวจ<span class="hl-warn">ความถูกต้องทา
 SAR FACT SHEET — โรงเรียนที่ [X/N]
 ══════════════════════════════════════</span>
 ชื่อโรงเรียน: [จาก Zone D]
-เครือข่ายที่: [ระบุ]
+เครือข่ายที่: [อ้างอิง Tag หรือ Zone D]
 ระดับการศึกษา: [จาก Zone D]
 ปีการศึกษาที่รายงาน: [จาก Zone D]
 
@@ -994,37 +987,29 @@ SAR FACT SHEET — โรงเรียนที่ [X/N]
           </div>
         </div>
         <div class="limit-box">
-          <strong>⚠ Token Limit:</strong> NotebookLM มีข้อจำกัดความยาวต่อการตอบ 1 ครั้ง — แนะนำให้ใส่ Zone D ไม่เกิน <strong>4 โรงต่อ Notebook</strong> หรือแบ่งถามเป็นรอบ เช่น "สรุป Fact Sheet โรงที่ 1–4 ก่อน"
+          <strong>⚠ Token Limit:</strong> NotebookLM มีข้อจำกัดความยาวต่อการตอบ 1 ครั้ง — แนะนำให้จัดกลุ่ม Tag ละไม่เกิน <strong>4-5 โรงต่อการรัน P1-P5</strong> หากมีโรงเรียนในเครือข่ายมากเกินไป
         </div>
       </div>
     </div>
   </div>
 
-</div><!-- /container layer1 -->
-</div><!-- /tab-panel layer1 -->
-
-
-<!-- ==================== LAYER 2 ==================== -->
-<div id="layer2" class="tab-panel">
+</div></div><div id="layer2" class="tab-panel">
 <div class="container">
 
-  <!-- LAYER 2 INTRO -->
   <div class="layer2-intro">
-    <div class="layer2-intro-title">◈ Layer 2 — Gemini Gem · Gap Report Engine</div>
-    <p>รับ SAR Fact Sheet จาก Layer 1 (P5) แล้วสร้าง Gap Report + คำแนะนำแก้ไขพร้อม<strong style="color:#6aaee8"> ตัวอย่างเฉพาะเจาะจงจากบริบทจริงของโรงเรียนนั้น</strong> — ไม่ใช้ตัวอย่างกลางๆ ที่ใช้กับทุกโรงเหมือนกัน<br><br>
+    <div class="layer2-intro-title">◈ Layer 2 — Gemini Gem · Gap Report Engine (อัปเดตใหม่)</div>
+    <p>รับ SAR Fact Sheet จาก Layer 1 (P5) แล้วสร้าง Gap Report + คำแนะนำแก้ไข <strong style="color:#6aaee8"> บังคับใช้โครงสร้าง (ก)ปัญหา (ข)ผิด (ค)ถูก ทุกรายการ </strong> โดยใช้ตัวอย่างเฉพาะเจาะจงจากบริบทจริงของโรงเรียนนั้น<br><br>
     วิธีใช้: Copy ข้อความ SAR Fact Sheet ทั้งหมดจาก P5 → วาง + ส่งให้ Gemini Gem ที่ตั้งค่า System Prompt ไว้แล้ว</p>
   </div>
 
-  <!-- FLOW CONNECTOR -->
   <div class="flow-connector">
     <span>🔗</span>
     <span><strong>Layer 1 Output (P5)</strong> → Copy SAR Fact Sheet ทุกโรง →</span>
     <span style="color: #6aaee8; font-weight: 600;">Gemini Gem (System Prompt ด้านล่าง)</span>
     <span>→</span>
-    <span><strong>Gap Report + คำแนะนำเฉพาะโรง</strong></span>
+    <span><strong>Gap Report สไตล์ (ก)(ข)(ค)</strong></span>
   </div>
 
-  <!-- WORKFLOW L2 -->
   <div class="workflow">
     <div class="wf-step highlight"><strong>Input</strong>SAR Fact Sheet (P5)</div>
     <span class="wf-arrow">→</span>
@@ -1032,14 +1017,13 @@ SAR FACT SHEET — โรงเรียนที่ [X/N]
     <span class="wf-arrow">→</span>
     <div class="wf-step highlight"><strong>G2</strong>Gap Analysis</div>
     <span class="wf-arrow">→</span>
-    <div class="wf-step highlight"><strong>G3</strong>ตัวอย่างเฉพาะโรง</div>
+    <div class="wf-step highlight"><strong>G3</strong>(ก)(ข)(ค) Model</div>
     <span class="wf-arrow">→</span>
     <div class="wf-step highlight"><strong>G4</strong>Priority Action</div>
     <span class="wf-arrow">→</span>
     <div class="wf-step highlight"><strong>Output</strong>Gap Report</div>
   </div>
 
-  <!-- ===== SYSTEM PROMPT ===== -->
   <div class="section">
     <div class="section-header">
       <span class="section-num blue">SYS</span>
@@ -1054,14 +1038,14 @@ SAR FACT SHEET — โรงเรียนที่ [X/N]
     <div class="prompt-card layer2-card master">
       <div class="card-head" onclick="toggle(this)">
         <span class="card-badge badge-sys">SYSTEM</span>
-        <span class="card-title">Gemini Gem System Prompt — Gap Report Engine v1</span>
+        <span class="card-title">Gemini Gem System Prompt — Gap Report (ก)(ข)(ค) Framework</span>
         <span class="toggle-icon">▶</span>
       </div>
       <div class="card-body open">
-        <div class="purpose-box blue">คัดลอก Prompt ทั้งหมดนี้วางใน "Instructions" ของ Gemini Gem — ไม่ต้องส่งเป็น Message แต่ละครั้ง</div>
+        <div class="purpose-box blue">คัดลอก Prompt ทั้งหมดนี้วางใน "Instructions" ของ Gemini Gem — กฎหลักคือบังคับใช้ (ก)(ข)(ค) กับการดึงตัวอย่างเฉพาะโรงเรียนนั้นๆ มาแสดง</div>
         <div class="dna-row">
           <span class="dna-tag blue">รับ SAR Fact Sheet จาก P5</span>
-          <span class="dna-tag blue">Gap Analysis รายมาตรฐาน</span>
+          <span class="dna-tag blue">Gap (ก)(ข)(ค) เสมอ</span>
           <span class="dna-tag blue">ตัวอย่างเฉพาะโรง</span>
           <span class="dna-tag blue">Priority Action Plan</span>
         </div>
@@ -1072,107 +1056,74 @@ SAR FACT SHEET — โรงเรียนที่ [X/N]
           </div>
           <pre><span class="hl-bracket">===ROLE===</span>
 คุณคือ SAR Gap Report Specialist ที่ทำงานร่วมกับผู้ทรงคุณวุฒิด้านการประกันคุณภาพการศึกษา
-ความเชี่ยวชาญ: วิเคราะห์ช่องว่าง (Gap) ระหว่างสภาพจริงของ SAR กับเกณฑ์ สมศ. รอบ 5 (พ.ศ. 2567–2571)
-และแปลง Gap เหล่านั้นเป็น <span class="hl-tip">คำแนะนำแก้ไขที่ใช้ข้อมูลจริงจากโรงเรียนนั้นๆ ทุกครั้ง</span>
+หน้าที่เดียวของคุณ: แปลงช่องว่างจาก SAR Fact Sheet ให้เป็นคำแนะนำแก้ไขที่โรงเรียนนำไปปฏิบัติได้ทันทีในรูปแบบ Final Report 
 
 <span class="hl-bracket">===INPUT ที่จะได้รับ===</span>
-SAR Fact Sheet จาก NotebookLM (Layer 1 / P5) ของโรงเรียนตั้งแต่ 1 โรงขึ้นไป
-แต่ละ Fact Sheet มี 8 ส่วน: มาตรฐานที่ครบ · ที่ขาด · ตัวเลข · จุดเด่น · สิ่งที่ขาด · จุดไม่สอดคล้อง · คำแนะนำ · ความพร้อม
+SAR Fact Sheet จาก NotebookLM (Layer 1) ของโรงเรียนตั้งแต่ 1 โรงขึ้นไป
+แต่ละ Fact Sheet มีข้อมูลสถานะปัจจุบัน จุดเด่น สิ่งที่ขาด และตัวเลขสถิติต่างๆ
 
-<span class="hl-bracket">===CORE PRINCIPLE — ตัวอย่างเฉพาะเจาะจง===</span>
-<span class="hl-warn">กฎสำคัญ: ทุก Gap ที่ระบุ ต้องมีตัวอย่างที่ดึงมาจากบริบทจริงของโรงเรียนนั้น</span>
-- ดึงชื่อโครงการ ชื่อมาตรฐาน ตัวเลข หรือข้อความจริงจาก Fact Sheet มาใช้ในตัวอย่าง
-- ห้ามเขียนตัวอย่างกลางๆ เช่น "ควรระบุชื่อเอกสาร" → ต้องเขียนว่า "ควรระบุชื่อเอกสารสำหรับโครงการ [ชื่อโครงการจริง] เช่น รายงานผลการดำเนินโครงการ [ชื่อโครงการ] ปีการศึกษา [ปี]"
-- ถ้า Fact Sheet ไม่มีข้อมูลเพียงพอ ให้ระบุ "⚠ ต้องการข้อมูลเพิ่มเติม: [ระบุว่าขาดอะไร]" แทนการเขียนตัวอย่างกลางๆ
+<span class="hl-warn">===กฎสำคัญสูงสุด: ทุก Gap ต้องมีครบ 3 องค์ประกอบ (ก)(ข)(ค)===</span>
+การระบุ Gap รายมาตรฐานและเชิงโครงสร้าง ต้องอธิบายด้วยรูปแบบนี้เสมอ:
+(ก) ปัญหาที่พบ — ระบุชัดว่าขาดอะไร หรือมีข้อบกพร่องตรงไหน
+(ข) ตัวอย่างที่ผิด (จาก SAR จริง) — ยกข้อความ หรือวิธีการนำเสนอที่เป็นปัญหาจากเอกสาร Fact Sheet 
+(ค) ตัวอย่างที่ถูก (ใช้บริบทโรงเรียนนี้) — เขียนโครงสร้างหรือเนื้อหาที่ถูกต้อง โดยดึงข้อมูลจริงจาก Fact Sheet (เช่น ชื่อโครงการ ปีการศึกษา หรือจำนวนครู) มาแต่งให้สมบูรณ์ <span class="hl-red">ห้ามเขียนคำแนะนำแบบกลางๆ เด็ดขาด</span>
 
 <span class="hl-bracket">===โครงสร้าง OUTPUT ที่ต้องสร้าง===</span>
-
 <span class="hl-zone">สำหรับทุกโรงเรียนที่ได้รับ Fact Sheet ให้สร้าง:</span>
 
 <span class="hl-key">╔══════════════════════════════════════════════
-GAP REPORT — [ชื่อโรงเรียน] (เครือข่ายที่ [X])
+FINAL GAP ANALYSIS REPORT
+โรงเรียน: [ชื่อโรงเรียน] · เครือข่าย: [เครือข่ายที่]
 ปีการศึกษา [ปี] · ระดับ [ระดับ]
 ══════════════════════════════════════════════╗</span>
 
-<span class="hl-key">【SECTION A】 GAP MATRIX รายมาตรฐาน</span>
-สร้างตาราง Gap สำหรับแต่ละมาตรฐาน สมศ. รอบ 5:
-
-มาตรฐานที่ 1 / มาตรฐานที่ 2 / มาตรฐานที่ 3 (และระดับปฐมวัยถ้ามี)
+<span class="hl-key">【SECTION A】 GAP MATRIX รายมาตรฐาน (ใช้รูปแบบ ก, ข, ค)</span>
+สร้างตาราง หรือ รายการ Gap สำหรับแต่ละมาตรฐาน สมศ. รอบ 5 (มาตรฐาน 1 / 2 / 3):
 
 สำหรับแต่ละมาตรฐาน ระบุ:
-  📍 สภาพปัจจุบัน (จาก Fact Sheet)
-  🎯 เกณฑ์ที่ สมศ. รอบ 5 กำหนด
-  ❌ Gap ที่พบ: [ระบุ Gap ที่ชัดเจน]
-  💡 คำแนะนำ + <span class="hl-warn">ตัวอย่างเฉพาะโรงนี้</span>: [ดึงข้อมูลจริงจาก Fact Sheet มาใส่]
+  🎯 เกณฑ์ สมศ. รอบ 5: [สรุปสั้นๆ]
+  ❌ GAP ที่พบ:
+  (ก) ปัญหาที่พบ: [อธิบายปัญหา]
+  (ข) ตัวอย่างที่ผิด (จาก SAR จริง): "[ยกตัวอย่างจาก Fact Sheet]"
+  (ค) ตัวอย่างที่ถูก (ใช้บริบทโรงเรียนนี้): "[เขียนหลักฐานหรือเนื้อหาใหม่โดยดึงชื่อข้อมูลจริงมาใส่]"
 
-<span class="hl-key">【SECTION B】 GAP เชิงโครงสร้าง SAR</span>
-วิเคราะห์ Gap ที่ไม่ได้อยู่ในรายมาตรฐาน แต่เป็นปัญหาโครงสร้างเอกสาร:
+<span class="hl-key">【SECTION B】 GAP ด้านตัวเลขและภาษา</span>
+  🔴 ตัวเลขน่าสงสัย: [ดึงตัวเลขจาก Fact Sheet เช่น เป้า = ผล 100%]
+  ❓ ข้อสังเกต: [เหตุผล]
+  💡 แนะนำ: [วิธีปรับ]
+  (หากมีปัญหาภาษา ให้เพิ่ม (ก)(ข)(ค) ในมิติของภาษาด้วย)
 
-สำหรับแต่ละ Gap ที่พบ:
-  ❌ Gap: [ระบุปัญหา]
-  📌 พบที่: [ระบุตำแหน่ง/หน้า จาก Fact Sheet]
-  💡 แก้ไขด้วย: [คำแนะนำ]
-  ✏️ ตัวอย่างเฉพาะโรงนี้:
-     ❌ ที่มีอยู่: "[ข้อความ/ข้อมูลจริงจาก Fact Sheet]"
-     ✅ ที่ควรเป็น: "[เขียนใหม่โดยใช้บริบทจริงของโรงเรียนนี้]"
+<span class="hl-key">【SECTION C】 PRIORITY ACTION PLAN</span>
+จัดลำดับความเร่งด่วนของการแก้ไข:
+🔴 แก้ก่อน (ภายใน 2 สัปดาห์ — Critical for สมศ.): [รายการที่กระทบผลประเมิน]
+🟡 แก้ระยะกลาง (ภายใน 1 เดือน): [รายการที่เสริมความสมบูรณ์]
+🟢 แก้ระยะยาว (ปีการศึกษาหน้า): [รายการเชิงระบบ]
 
-<span class="hl-key">【SECTION C】 GAP ด้านตัวเลขและภาษา</span>
-รายการตัวเลขที่น่าสงสัย + ตัวอย่างภาษาที่ต้องแก้ไข
-
-สำหรับ Gap ตัวเลข:
-  🔴 ตัวเลขที่น่าสงสัย: [ระบุตัวเลขจริงจาก Fact Sheet เช่น "โครงการ X: เป้า 120 คน / ผล 120 คน = 100%"]
-  ❓ ข้อสังเกต: [เหตุผลที่น่าสงสัย]
-  💡 แนะนำ: [วิธีปรับการรายงานให้น่าเชื่อถือ]
-
-สำหรับ Gap ภาษา (ถ้า Fact Sheet มีข้อมูล):
-  ❌ ภาษาเดิม: "[ยกข้อความจาก Fact Sheet]"
-  ✅ ควรแก้เป็น: "[เขียนใหม่ให้เป็นวิชาการ]"
-
-<span class="hl-key">【SECTION D】 PRIORITY ACTION PLAN</span>
-จัดลำดับความเร่งด่วนของการแก้ไข ใน 3 ระดับ:
-
-🔴 แก้ก่อน (ภายใน 2 สัปดาห์ — Critical for สมศ. รอบ 5):
-   [รายการที่หากไม่แก้ จะกระทบผลการประเมินโดยตรง]
-   → Action: [ระบุสิ่งที่ต้องทำ + ใช้ข้อมูลโรงเรียนนี้]
-
-🟡 แก้ระยะกลาง (ภายใน 1 เดือน — สำคัญแต่ไม่เร่งด่วน):
-   [รายการที่ควรแก้เพื่อยกคุณภาพ SAR]
-   → Action: [ระบุสิ่งที่ต้องทำ]
-
-🟢 แก้ระยะยาว (ปีการศึกษาหน้า — ปรับปรุงเชิงระบบ):
-   [รายการที่ต้องวางแผนเชิงระบบ]
-   → Action: [ระบุสิ่งที่ต้องทำ]
-
-<span class="hl-key">【SECTION E】 สรุปความพร้อมรับ สมศ. รอบ 5</span>
-  สถานะ: 🟢 พร้อม / 🟡 ต้องปรับปรุงก่อน / 🔴 ยังไม่พร้อม
-  Gap วิกฤต (ถ้ามี): [รายการที่เป็น Showstopper]
-  Gap ที่แก้ได้เร็ว: [รายการที่ใช้เวลาน้อยแต่ Impact สูง]
-  ประมาณการเวลาเพื่อให้พร้อม: [X สัปดาห์/เดือน]
+<span class="hl-key">【SECTION D】 สรุปความพร้อมรับ สมศ. รอบ 5</span>
+  สถานะ: 🟢 พร้อม / 🟡 ต้องปรับปรุงก่อน / 🔴 ยังไม่พร้อม (พร้อมระบุเหตุผลสั้นๆ 1-2 ประโยค)
+  📌 ประเด็นสำคัญสำหรับนิเทศก์: [ตั้งคำถามเชิงลึก 2-3 ข้อ ให้นิเทศก์ใช้ซักถามโรงเรียนนี้]
 
 <span class="hl-bracket">===เมื่อวิเคราะห์ครบทุกโรง===</span>
-สร้าง <span class="hl-tip">CLUSTER SUMMARY</span> รวม: Gap ที่พบซ้ำกันหลายโรง (≥ 3 โรง) → ระบุว่าเป็นปัญหาระดับเครือข่าย
-ไม่ต้องสร้าง Cluster Summary ถ้ามีแค่ 1 โรง
+สร้าง <span class="hl-tip">CLUSTER SUMMARY</span> (ถ้ามี ≥ 2 โรง): สรุป Gap ที่พบซ้ำกันหลายโรง เพื่อให้นิเทศก์ระดับเครือข่ายเห็นภาพรวม
 
 <span class="hl-bracket">===สิ่งที่ห้ามทำ===</span>
-<span class="hl-warn">- ห้ามเขียนตัวอย่างกลางๆ ที่ไม่ได้ดึงข้อมูลจากโรงเรียนนั้น</span>
-<span class="hl-warn">- ห้ามประเมินระดับคุณภาพเองโดยไม่มีข้อมูลสนับสนุน</span>
-<span class="hl-warn">- ห้ามเพิ่ม Gap ที่ไม่มีอยู่ใน Fact Sheet (ห้ามคาดเดา)</span>
-- ถ้าข้อมูลไม่พอ ให้ระบุ "⚠ ต้องการข้อมูลเพิ่มเติมจาก SAR ต้นฉบับ: [ระบุว่าขาดอะไร]"</pre>
+- ห้ามให้กำลังใจ ชื่นชม หรือใช้ภาษาฟุ่มเฟือย ให้ใช้ภาษาทางการระดับวิชาชีพ
+- ห้ามประเมินระดับคุณภาพเองโดยไม่มีข้อมูลอ้างอิงจากต้นฉบับ
+- ถ้าข้อมูลไม่พอ ให้เขียนว่า "⚠ ข้อมูลใน Fact Sheet ไม่เพียงพอสำหรับวิเคราะห์ส่วนนี้" แทนการเดาสุ่ม</pre>
         </div>
         <div class="output-section">
           <div class="output-title">ผลลัพธ์ที่คาดหวังจาก Layer 2</div>
           <div class="output-grid">
-            <div class="output-item"><span class="output-icon">✓</span>Gap Matrix รายมาตรฐาน ทุกโรง</div>
+            <div class="output-item"><span class="output-icon">✓</span>Gap Report ทุกมาตรฐานใช้แบบฟอร์ม (ก)(ข)(ค) เสมอ</div>
             <div class="output-item"><span class="output-icon">✓</span>ตัวอย่างเฉพาะโรง — ดึงข้อมูลจริงจาก Fact Sheet</div>
-            <div class="output-item"><span class="output-icon">✓</span>Priority Action 3 ระดับ พร้อม Timeline</div>
-            <div class="output-item"><span class="output-icon">✓</span>Cluster Summary — Gap ระดับเครือข่าย</div>
+            <div class="output-item"><span class="output-icon">✓</span>Priority Action 3 ระดับ พร้อม คำถามสำหรับนิเทศก์</div>
+            <div class="output-item"><span class="output-icon">✓</span>Cluster Summary — ภาพรวมระดับเครือข่าย</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== G2: วิธีส่ง INPUT ===== -->
   <div class="section">
     <div class="section-header">
       <span class="section-num blue">G2</span>
@@ -1193,10 +1144,10 @@ GAP REPORT — [ชื่อโรงเรียน] (เครือข่า�
             <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
           </div>
           <pre>ด้านล่างนี้คือ SAR Fact Sheet จาก NotebookLM Layer 1 สำหรับโรงเรียน [จำนวน N] แห่ง
-<span class="hl-key">เครือข่ายที่ [X]</span> — วิเคราะห์ตามลำดับ สร้าง Gap Report ครบทุก Section (A–E) ให้ทุกโรง
+<span class="hl-key">เครือข่ายที่ [ระบุ Tag หรือ เครือข่าย]</span> — วิเคราะห์ตามลำดับ สร้าง Gap Report ครบทุก Section (A–D) ให้ทุกโรง
 
 <span class="hl-warn">ข้อกำหนดสำคัญ:</span>
-- ทุก Gap ต้องมีตัวอย่างที่ดึงจากบริบทจริงของโรงเรียนนั้น (ชื่อโครงการ ตัวเลข ข้อความจริง)
+- ทุก Gap ใน Section A ต้องใช้โครงสร้าง (ก) ปัญหาที่พบ, (ข) ตัวอย่างที่ผิด, และ (ค) ตัวอย่างที่ถูก โดยใช้บริบทของโรงเรียนนั้นเสมอ
 - ถ้าข้อมูลไม่พอ ให้ระบุ "⚠ ต้องการข้อมูลเพิ่มเติม" แทนการเดา
 - สร้าง Cluster Summary ท้ายสุดถ้ามีโรงเรียนตั้งแต่ 2 โรงขึ้นไป
 
@@ -1206,33 +1157,25 @@ GAP REPORT — [ชื่อโรงเรียน] (เครือข่า�
         </div>
 
         <div class="example-block">
-          <div class="example-block-title">✦ ตัวอย่าง Output ที่ถูกต้อง vs ผิด — Gap พร้อม Context เฉพาะโรง</div>
+          <div class="example-block-title">✦ ตัวอย่าง Output แบบ (ก)(ข)(ค) ที่ถูกต้อง</div>
           <div style="font-size: 12.5px; line-height: 1.75; color: var(--muted);">
-            <div style="margin-bottom: .7rem;">
-              <span style="color: var(--red); font-family: var(--mono); font-size: 11px;">❌ ตัวอย่างกลางๆ (ห้ามใช้)</span><br>
-              "ควรระบุชื่อเอกสารหลักฐานให้ชัดเจนในแต่ละมาตรฐาน และแยกรายระดับการศึกษา"
-            </div>
             <div>
-              <span style="color: var(--green); font-family: var(--mono); font-size: 11px;">✅ ตัวอย่างเฉพาะโรง (ถูกต้อง)</span><br>
-              "โรงเรียนนี้ระบุหลักฐานมาตรฐานที่ 2 ว่า 'โครงการพัฒนาครูสู่มืออาชีพ' แต่ไม่มีชื่อเอกสารกำกับ ควรแก้เป็น: (1) แผนพัฒนาบุคลากร ปีการศึกษา [ปี], (2) รายงานผลการอบรม 'โครงการพัฒนาครูสู่มืออาชีพ' ครั้งที่ 1–2, (3) ภาพกิจกรรม + บัญชีรายชื่อผู้เข้าร่วม"
+              <span style="color: var(--teal); font-weight: bold;">🔴 GAP วิกฤต — หลักฐานเชิงประจักษ์ มาตรฐานที่ 2</span><br>
+              <strong style="color:var(--text);">(ก) ปัญหาที่พบ:</strong> หลักฐานสนับสนุนไม่มีรายการเอกสารจริง ใช้เครื่องหมาย ✓ แทน ทำให้ตรวจสอบไม่ได้<br>
+              <strong style="color:var(--text);">(ข) ตัวอย่างที่ผิด (จาก SAR จริง):</strong> "โรงเรียนมีการบริหารจัดการด้านวิชาการโดยจัดทำแผนงานและโครงการต่างๆ ✓"<br>
+              <strong style="color:var(--text);">(ค) ตัวอย่างที่ถูก (ใช้บริบทโรงเรียนนี้):</strong><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;1. แผนปฏิบัติการประจำปีการศึกษา 2568<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;2. คำสั่งแต่งตั้งคณะกรรมการบริหารหลักสูตร<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;3. แบบบันทึกการนิเทศภายใน ภาคเรียนที่ 1–2/2568<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;4. รายงานผลการประเมินการสอน จำนวน 40 คน
             </div>
           </div>
         </div>
 
-        <div class="output-section">
-          <div class="output-title">ผลลัพธ์ที่คาดหวัง</div>
-          <div class="output-grid">
-            <div class="output-item"><span class="output-icon">✓</span>Gap Report Section A–E ทุกโรง</div>
-            <div class="output-item"><span class="output-icon">✓</span>ตัวอย่างดึงข้อมูลโรงนั้นๆ ทุก Gap</div>
-            <div class="output-item"><span class="output-icon">✓</span>Priority Action พร้อม Timeline</div>
-            <div class="output-item"><span class="output-icon">✓</span>Cluster Summary ถ้ามี ≥ 2 โรง</div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== G3: USAGE GUIDE ===== -->
   <div class="section">
     <div class="section-header">
       <span class="section-num blue">G3</span>
@@ -1262,7 +1205,7 @@ GAP REPORT — [ชื่อโรงเรียน] (เครือข่า�
             <div>1. เปิด Gem "SAR Gap Report — นครราชสีมา"</div>
             <div>2. Copy <strong style="color: var(--text)">SAR Fact Sheet ทั้งหมด</strong>จาก NotebookLM P5 (ทุกโรงในรอบนั้น)</div>
             <div>3. วางใน Template G2 แทนที่ [วาง Fact Sheet ที่นี่]</div>
-            <div>4. ส่ง → รอ Gap Report ครบ Section A–E</div>
+            <div>4. ส่ง → รอ Gap Report แบบ (ก)(ข)(ค) ครบทุก Section</div>
           </div>
 
           <div style="margin-bottom: 1.2rem;">
@@ -1277,12 +1220,10 @@ GAP REPORT — [ชื่อโรงเรียน] (เครือข่า�
             <button class="copy-btn" onclick="copyPrompt(this)">คัดลอก</button>
           </div>
           <pre>สำหรับ Gap "[ระบุ Gap ที่ต้องการ]" ของ[ชื่อโรงเรียน]
-ขอตัวอย่างที่เฉพาะเจาะจงขึ้น โดยใช้:
-- ชื่อโครงการจริงจาก Fact Sheet: [ระบุชื่อโครงการ]
-- ตัวเลขจริงที่ปรากฏ: [ระบุตัวเลข]
-- มาตรฐานที่เกี่ยวข้อง: [มาตรฐานที่ X]
-
-เขียนตัวอย่าง ❌ (ที่มีอยู่) และ ✅ (ที่ควรเป็น) ให้ครบโดยใช้บริบทข้างต้น</pre>
+ขอตัวอย่างที่เฉพาะเจาะจงขึ้น โดยใช้โครงสร้าง (ก)(ข)(ค) อีกครั้ง:
+- (ก) ระบุปัญหาที่ชัดเจน
+- (ข) ตัวอย่าง ❌ จาก Fact Sheet: [ระบุข้อมูลจริงจาก Fact Sheet]
+- (ค) ตัวอย่าง ✅ ที่ควรเป็น: โดยอิงจาก [ระบุชื่อโครงการ/มาตรฐาน/ตัวเลข]</pre>
         </div>
 
         <div style="margin-top: 1rem; padding: .8rem 1rem; background: rgba(61,191,170,0.05); border: 1px solid rgba(61,191,170,0.15); border-radius: 6px; font-size: 12.5px; color: var(--muted);">
@@ -1292,10 +1233,7 @@ GAP REPORT — [ชื่อโรงเรียน] (เครือข่า�
     </div>
   </div>
 
-</div><!-- /container layer2 -->
-</div><!-- /tab-panel layer2 -->
-
-<script>
+</div></div><script>
 function switchTab(id, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
